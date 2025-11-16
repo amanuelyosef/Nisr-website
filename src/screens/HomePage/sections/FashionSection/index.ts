@@ -1,0 +1,1 @@
+export { FashionSection } from "./FashionSection";
