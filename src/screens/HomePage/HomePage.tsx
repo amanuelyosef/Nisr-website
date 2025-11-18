@@ -1,9 +1,9 @@
 import React from "react";
 import { CategoriesSection } from "./sections/CategoriesSection";
 import { ElectronicsSection } from "./sections/ElectronicsSection";
-import { FashionSection } from "./sections/FashionSection";
+import { FashionSection } from "../../components/ui/FashionSection";
 import { TechProductsSection } from "./sections/TechProductsSection";
-import { TrendingAdsSection } from "./sections/TrendingAdsSection";
+import { TrendingAdsSection } from "../../components/ui/TrendingAdsSection";
 
 export const HomePage = (): JSX.Element => {
   return (

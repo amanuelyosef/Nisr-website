@@ -1,34 +1,7 @@
 import { SearchIcon } from "lucide-react";
-import React from "react";
-import { Button } from "../../../../components/ui/button";
-import { Input } from "../../../../components/ui/input";
+import { Button } from "../button";
+import { Input } from "../input";
 
-const navigationItems = [
-  {
-    icon: "notification",
-    label: "Notification",
-    badge: "99",
-    hasNotification: true,
-  },
-  {
-    icon: "cart",
-    label: "Cart",
-    badge: null,
-    hasNotification: false,
-  },
-  {
-    icon: "chat",
-    label: "Chat",
-    badge: null,
-    hasNotification: false,
-  },
-  {
-    icon: "profile",
-    label: "Abebe",
-    badge: null,
-    hasNotification: false,
-  },
-];
 
 export const FashionSection = (): JSX.Element => {
   return (
@@ -59,7 +32,7 @@ export const FashionSection = (): JSX.Element => {
               <img
                 className="w-[34px] h-[33px]"
                 alt="Notification"
-                src="/iconamoon-notification.svg"
+                src="/Nisr-website/public/iconamoon-notification.svg"
               />
             <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs tracking-[0.40px] leading-4 whitespace-nowrap">
               Notification
@@ -70,7 +43,7 @@ export const FashionSection = (): JSX.Element => {
             <img
               className="w-[34px] h-[30px]"
               alt="Shopping cart"
-              src="/shopping-cart-2.svg"
+              src="/Nisr-website/public/shopping-cart-2.svg"
             />
             <span className="[font-family:'Nunito',Helvetica] font-normal text-lightgray-11 text-xs text-center tracking-[0.40px] leading-4">
               Cart
@@ -81,7 +54,7 @@ export const FashionSection = (): JSX.Element => {
             <img
               className="w-[29px] h-[29px]"
               alt="Chat"
-              src="/ph-chat-text.svg"
+              src="/Nisr-website/public/ph-chat-text.svg"
             />
             <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs text-center tracking-[0.40px] leading-4 whitespace-nowrap">
               Chat
@@ -92,7 +65,7 @@ export const FashionSection = (): JSX.Element => {
             <img
               className="w-[33px] h-[31px]"
               alt="Profile"
-              src="/iconamoon-profile-bold.svg"
+              src="/Nisr-website/public/iconamoon-profile-bold.svg"
             />
             <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs text-center tracking-[0.40px] leading-4 whitespace-nowrap">
               Abebe

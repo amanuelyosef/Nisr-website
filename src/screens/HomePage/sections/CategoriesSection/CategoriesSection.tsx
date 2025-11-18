@@ -4,17 +4,17 @@ import { Card, CardContent } from "../../../../components/ui/card";
 
 const topImages = [
   {
-    src: "/display-electronics-image.png",
+    src: "public/display-electronics-image.png",
     alt: "Display electronics",
     label: "Electronics",
   },
   {
-    src: "/display-fashion-image-1.png",
+    src: "public/display-fashion-image-1.png",
     alt: "Display fashion",
     label: "Fashion",
   },
   {
-    src: "/display-furniture-image.png",
+    src: "public/display-furniture-image.png",
     alt: "Display furniture",
     label: "Furniture",
   },
@@ -22,47 +22,47 @@ const topImages = [
 
 const categories = [
   {
-    src: "/image-35.png",
+    src: "public/image-35.png",
     alt: "Electronics",
     label: "Electronics",
   },
   {
-    src: "/image-58.png",
+    src: "public/image-58.png",
     alt: "Stationary",
     label: "Stationary",
   },
   {
-    src: "/image-59.png",
+    src: "public/image-59.png",
     alt: "Food and Drink",
     label: "Food and Drink",
   },
   {
-    src: "/image-61.png",
+    src: "public/image-61.png",
     alt: "Health and Beauty",
     label: "Health and Beauty",
   },
   {
-    src: "/image-38.png",
+    src: "public/image-38.png",
     alt: "Services",
     label: "Services",
   },
   {
-    src: "/image-60.png",
+    src: "public/image-60.png",
     alt: "Fashion",
     label: "Fashion",
   },
   {
-    src: "/image-63.png",
+    src: "public/image-63.png",
     alt: "Lost and Found",
     label: "Lost and Found",
   },
   {
-    src: "/image-65.png",
+    src: "public/image-65.png",
     alt: "Sport and Outdoor",
     label: "Sport and Outdoor",
   },
   {
-    src: "/image-64.png",
+    src: "public/image-64.png",
     alt: "Books and Art",
     label: "Books and Art",
   },
@@ -86,9 +86,6 @@ export const CategoriesSection = (): JSX.Element => {
                 alt={image.alt}
                 src={image.src}
               />
-              <div className="absolute bottom-4 left-4 text-white text-2xl font-bold [font-family:'Nunito',Helvetica]">
-                {image.label}
-              </div>
             </div>
           ))}
         </div>

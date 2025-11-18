@@ -5,7 +5,7 @@ import { Card, CardContent } from "../../../../components/ui/card";
 const productData = [
   {
     id: 1,
-    image: "/image-19-2.png",
+    image: "public/image-19-2.png",
     description: "Brand new Lamborghini 2025 made in USA high speed and ...",
     price: "ETB 1,000",
     location: "Addis Ababa • Brand New",
@@ -13,7 +13,7 @@ const productData = [
   },
   {
     id: 2,
-    image: "/image-23-1.png",
+    image: "public/image-23-1.png",
     description: "Brand new Lamborghini 2025 made in USA high speed and ...",
     price: "ETB 1,000",
     location: "Addis Ababa • Brand New",
@@ -21,7 +21,7 @@ const productData = [
   },
   {
     id: 3,
-    image: "/image-21-2.png",
+    image: "public/image-21-2.png",
     description: "Brand new Lamborghini 2025 made in USA high speed and ...",
     price: "ETB 1,000",
     location: "Addis Ababa • Brand New",
@@ -29,7 +29,7 @@ const productData = [
   },
   {
     id: 4,
-    image: "/image-24-1.png",
+    image: "public/image-24-1.png",
     description: "Brand new Lamborghini 2025 made in USA high speed and ...",
     price: "ETB 1,000",
     location: "Addis Ababa • Brand New",
@@ -37,7 +37,7 @@ const productData = [
   },
   {
     id: 5,
-    image: "/image-21-2.png",
+    image: "public/image-21-2.png",
     description: "Brand new Lamborghini 2025 made in USA high speed and ...",
     price: "ETB 1,000",
     location: "Addis Ababa • Brand New",
@@ -45,7 +45,7 @@ const productData = [
   },
   {
     id: 6,
-    image: "/image-21-2.png",
+    image: "public/image-21-2.png",
     description: "Brand new Lamborghini 2025 made in USA high speed and ...",
     price: "ETB 1,000",
     location: "Addis Ababa • Brand New",
@@ -53,7 +53,7 @@ const productData = [
   },
   {
     id: 7,
-    image: "/image-24-1.png",
+    image: "public/image-24-1.png",
     description: "Brand new Lamborghini 2025 made in USA high speed and ...",
     price: "ETB 1,000",
     location: "Addis Ababa • Brand New",
@@ -61,7 +61,7 @@ const productData = [
   },
   {
     id: 8,
-    image: "/image-19-2.png",
+    image: "public/image-19-2.png",
     description: "Brand new Lamborghini 2025 made in USA high speed and ...",
     price: "ETB 1,000",
     location: "Addis Ababa • Brand New",
@@ -69,7 +69,7 @@ const productData = [
   },
   {
     id: 9,
-    image: "/image-23-1.png",
+    image: "public/image-23-1.png",
     description: "Brand new Lamborghini 2025 made in USA high speed and ...",
     price: "ETB 1,000",
     location: "Addis Ababa • Brand New",
@@ -77,7 +77,7 @@ const productData = [
   },
   {
     id: 10,
-    image: "/image-19-2.png",
+    image: "public/image-19-2.png",
     description: "Brand new Lamborghini 2025 made in USA high speed and ...",
     price: "ETB 1,000",
     location: "Addis Ababa • Brand New",

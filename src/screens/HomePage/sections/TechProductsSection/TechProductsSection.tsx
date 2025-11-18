@@ -4,24 +4,24 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "../../../../components/ui/card";
 
 const techProducts = [
-  { id: 1, image: "/unsplash-pdds9xswyom-1.png", price: "ETB 1,000" },
-  { id: 2, image: "/unsplash-ytbmycczqrs.png", price: "ETB 1,000" },
-  { id: 3, image: "/unsplash-9u18fiowwbw-1.png", price: "ETB 1,000" },
-  { id: 4, image: "/unsplash-novnxxmdni0.svg", price: "ETB 1,000" },
-  { id: 5, image: "/unsplash-9u18fiowwbw.png", price: "ETB 1,000" },
-  { id: 6, image: "/unsplash-ytbmycczqrs-1.png", price: "ETB 1,000" },
+  { id: 1, image: "public/unsplash-pdds9xswyom-1.png", price: "ETB 1,000" },
+  { id: 2, image: "public/unsplash-ytbmycczqrs.png", price: "ETB 1,000" },
+  { id: 3, image: "public/unsplash-9u18fiowwbw-1.png", price: "ETB 1,000" },
+  { id: 4, image: "public/unsplash-novnxxmdni0.svg", price: "ETB 1,000" },
+  { id: 5, image: "public/unsplash-9u18fiowwbw.png", price: "ETB 1,000" },
+  { id: 6, image: "public/unsplash-ytbmycczqrs-1.png", price: "ETB 1,000" },
 ];
 
 const fashionProducts = [
-  { id: 7, image: "/rectangle-8.png", price: "ETB 1,000" },
-  { id: 8, image: "/unsplash-0vsk2-9dkqo.png", price: "ETB 1,000" },
-  { id: 9, image: "/unsplash-pdds9xswyom.png", price: "ETB 1,000" },
+  { id: 7, image: "public/rectangle-8.png", price: "ETB 1,000" },
+  { id: 8, image: "public/unsplash-0vsk2-9dkqo.png", price: "ETB 1,000" },
+  { id: 9, image: "public/unsplash-pdds9xswyom.png", price: "ETB 1,000" },
 ];
 
 const stationaryProducts = [
-  { id: 10, image: "/unsplash-pdds9xswyom-2.png", price: "ETB 1,000" },
-  { id: 11, image: "/image-18.png", price: "ETB 1,000" },
-  { id: 12, image: "/unsplash-0vsk2-9dkqo-1.png", price: "ETB 1,000" },
+  { id: 10, image: "public/unsplash-pdds9xswyom-2.png", price: "ETB 1,000" },
+  { id: 11, image: "public/image-18.png", price: "ETB 1,000" },
+  { id: 12, image: "public/unsplash-0vsk2-9dkqo-1.png", price: "ETB 1,000" },
 ];
 
 export const TechProductsSection = (): JSX.Element => {
