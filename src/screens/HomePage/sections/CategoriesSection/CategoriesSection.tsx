@@ -1,5 +1,4 @@
 import { MoreHorizontalIcon } from "lucide-react";
-import React from "react";
 import { Card, CardContent } from "../../../../components/ui/card";
 import displayElectronics from "../../../../assets/images/display-electronics-image.png";
 import displayFashion from "../../../../assets/images/display-fashion-image-1.png";
@@ -13,6 +12,7 @@ import image60 from "../../../../assets/images/image-60.png";
 import image63 from "../../../../assets/images/image-63.png";
 import image65 from "../../../../assets/images/image-65.png";
 import image64 from "../../../../assets/images/image-64.png";
+
 
 const topImages = [
   { src: displayElectronics, alt: "Display electronics", label: "Electronics" },
@@ -30,7 +30,7 @@ const categories = [
   { src: image63, alt: "Lost and Found", label: "Lost and Found" },
   { src: image65, alt: "Sport and Outdoor", label: "Sport and Outdoor" },
   { src: image64, alt: "Books and Art", label: "Books and Art" },
-  { src: null, alt: "More", label: "More", isMore: true },
+  { src: undefined, alt: "More", label: "More", isMore: true },
 ];
 
 export const CategoriesSection = (): JSX.Element => {
