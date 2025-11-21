@@ -17,9 +17,13 @@ export const FashionSection = (): JSX.Element => {
   return (
     <header className="w-full bg-white py-5 px-8 relative">
       <div className="flex items-center justify-between gap-8">
-        <div className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-[40px] tracking-[0] leading-[normal] whitespace-nowrap">
+        <button
+          type="button"
+          className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-[40px] tracking-[0] leading-[normal] whitespace-nowrap bg-transparent border-none cursor-pointer p-0 m-0"
+          onClick={() => navigate("/")}
+        >
           Nisr Market
-        </div>
+        </button>
 
         <div className="flex-1 max-w-[532px] relative">
           <div className="relative flex items-center">
