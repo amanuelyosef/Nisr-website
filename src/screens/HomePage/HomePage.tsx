@@ -1,4 +1,3 @@
-import React from "react";
 import { CategoriesSection } from "./sections/CategoriesSection";
 import { ElectronicsSection } from "./sections/ElectronicsSection";
 import { FashionSection } from "../../components/ui/FashionSection";

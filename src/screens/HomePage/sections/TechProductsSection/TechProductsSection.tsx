@@ -1,5 +1,4 @@
 import { ChevronRightIcon } from "lucide-react";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "../../../../components/ui/card";
 import unsplashPdds9_1 from "../../../../assets/images/unsplash-pdds9xswyom-1.png";

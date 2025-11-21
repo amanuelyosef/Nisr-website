@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "../../../../components/ui/card";
 import img19_2 from "../../../../assets/images/image-19-2.png";
