@@ -154,6 +154,7 @@ export const ProductDetailPage = (): JSX.Element => {
                     </p>
                   </div>
                   <Button
+                    onClick={() => navigate("/seller/abebe-kebede")}
                     variant="outline"
                     className="h-10 px-6 border-2 border-[#fe2188] bg-white hover:bg-[#ffe4f0] rounded-[50px] [font-family:'Nunito',Helvetica] font-bold text-[#fe2188] text-sm tracking-[0] leading-[normal]"
                   >
