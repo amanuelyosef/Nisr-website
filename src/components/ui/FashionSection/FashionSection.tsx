@@ -16,10 +16,10 @@ export const FashionSection = (): JSX.Element => {
 
   return (
     <header className="w-full bg-white py-5 px-8 relative">
-      <div className="flex items-center justify-between gap-8">
+      <div className="flex items-center justify-between gap-8 px-4">
         <button
           type="button"
-          className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-[40px] tracking-[0] leading-[normal] whitespace-nowrap bg-transparent border-none cursor-pointer p-0 m-0"
+          className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-[30px] tracking-[0] leading-[normal] whitespace-nowrap bg-transparent border-none cursor-pointer p-0 m-0"
           onClick={() => navigate("/")}
         >
           Nisr Market
@@ -56,7 +56,7 @@ export const FashionSection = (): JSX.Element => {
             </span>
           </button>
 
-          <button className="flex flex-col items-center gap-1">
+          <button className="flex flex-col items-center gap-1 px-1">
             <img
               className="w-[34px] h-[30px]"
               alt="Shopping cart"
@@ -67,14 +67,14 @@ export const FashionSection = (): JSX.Element => {
             </span>
           </button>
 
-          <button className="flex flex-col items-center gap-[5px]">
+          <button className="flex flex-col items-center gap-[5px] px-1">
             <img className="w-[29px] h-[29px]" alt="Chat" src={iconChat} />
             <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs text-center tracking-[0.40px] leading-4 whitespace-nowrap">
               Chat
             </span>
           </button>
 
-          <button className="flex flex-col items-center gap-1">
+          <button className="flex flex-col items-center gap-1 px-1">
             <img
               className="w-[33px] h-[31px]"
               alt="Profile"
@@ -84,11 +84,12 @@ export const FashionSection = (): JSX.Element => {
               Abebe
             </span>
           </button>
-        </nav>
 
-        <Button className="h-[55px] w-[134px] bg-[#fe2188] hover:bg-[#fe2188]/90 rounded-[10px] [font-family:'Montserrat',Helvetica] font-bold text-white text-2xl tracking-[0] leading-[normal]">
-          SELL
-        </Button>
+          <span className="mx-2" />
+          <Button className="h-[45px] w-[110px] bg-[#fe2188] hover:bg-[#fe2188]/90 rounded-[10px] [font-family:'Montserrat',Helvetica] font-bold text-white text-[18px] tracking-[0] leading-[normal]">
+            SELL
+          </Button>
+        </nav>
       </div>
     </header>
   );
