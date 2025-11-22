@@ -11,7 +11,7 @@ export const HomePage = (): JSX.Element => {
   return (
     <div className="bg-white overflow-hidden w-full min-w-[1440px] flex flex-col">
       <TrendingAdsSection onDownloadClick={() => setShowDownloadPopup(true)} />
-      <FashionSection />
+      <FashionSection onShowDownloadPopup={() => setShowDownloadPopup(true)} />
       <CategoriesSection />
       <TechProductsSection />
       <ElectronicsSection />

@@ -7,7 +7,12 @@ import iconCart from "../../../assets/images/shopping-cart-2.svg";
 import iconChat from "../../../assets/images/ph-chat-text.svg";
 import iconProfile from "../../../assets/images/iconamoon-profile-bold.svg";
 
-export const FashionSection = (): JSX.Element => {
+
+interface FashionSectionProps {
+  onShowDownloadPopup?: () => void;
+}
+
+export const FashionSection = ({ onShowDownloadPopup }: FashionSectionProps): JSX.Element => {
   const navigate = useNavigate();
 
   const handleSearch = () => {
@@ -45,7 +50,7 @@ export const FashionSection = (): JSX.Element => {
         </div>
 
         <nav className="flex items-center gap-3">
-          <button className="flex flex-col items-center gap-1 relative">
+          <button className="flex flex-col items-center gap-1 relative" onClick={onShowDownloadPopup}>
             <img
               className="w-[34px] h-[33px]"
               alt="Notification"
@@ -56,7 +61,7 @@ export const FashionSection = (): JSX.Element => {
             </span>
           </button>
 
-          <button className="flex flex-col items-center gap-1 px-1">
+          <button className="flex flex-col items-center gap-1 px-1" onClick={onShowDownloadPopup}>
             <img
               className="w-[34px] h-[30px]"
               alt="Shopping cart"
@@ -67,14 +72,14 @@ export const FashionSection = (): JSX.Element => {
             </span>
           </button>
 
-          <button className="flex flex-col items-center gap-[5px] px-1">
+          <button className="flex flex-col items-center gap-[5px] px-1" onClick={onShowDownloadPopup}>
             <img className="w-[29px] h-[29px]" alt="Chat" src={iconChat} />
             <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs text-center tracking-[0.40px] leading-4 whitespace-nowrap">
               Chat
             </span>
           </button>
 
-          <button className="flex flex-col items-center gap-1 px-1">
+          <button className="flex flex-col items-center gap-1 px-1" onClick={onShowDownloadPopup}>
             <img
               className="w-[33px] h-[31px]"
               alt="Profile"
@@ -86,7 +91,7 @@ export const FashionSection = (): JSX.Element => {
           </button>
 
           <span className="mx-2" />
-          <Button className="h-[45px] w-[110px] bg-[#fe2188] hover:bg-[#fe2188]/90 rounded-[10px] [font-family:'Montserrat',Helvetica] font-bold text-white text-[18px] tracking-[0] leading-[normal]">
+          <Button className="h-[45px] w-[110px] bg-[#fe2188] hover:bg-[#fe2188]/90 rounded-[10px] [font-family:'Montserrat',Helvetica] font-bold text-white text-[18px] tracking-[0] leading-[normal]" onClick={onShowDownloadPopup}>
             SELL
           </Button>
         </nav>

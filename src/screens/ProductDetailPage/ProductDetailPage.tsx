@@ -52,7 +52,7 @@ export const ProductDetailPage = (): JSX.Element => {
     <div className="bg-[#F0F0F0] min-h-screen">
       <div className="bg-white overflow-hidden w-full min-w-[1440px] flex flex-col">
         <TrendingAdsSection onDownloadClick={() => setShowDownloadPopup(true)} />
-        <FashionSection />
+        <FashionSection onShowDownloadPopup={() => setShowDownloadPopup(true)} />
       </div>
 
       <AppDownloadPopup
