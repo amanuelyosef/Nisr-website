@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { TrendingAdsSection } from "../../components/ui/TrendingAdsSection";
 import { FashionSection } from "../../components/ui/FashionSection";
+import AppDownloadPopup from "../../components/ui/AppDownloadPopup";
 import img19_2 from "../../assets/images/image-19-2.png";
 import img23_1 from "../../assets/images/image-23-1.png";
 import img21_2 from "../../assets/images/image-21-2.png";
@@ -93,13 +95,19 @@ const shopProducts = [
 
 export const SellerShopPage = (): JSX.Element => {
   const navigate = useNavigate();
+  const [showDownloadPopup, setShowDownloadPopup] = useState(false);
 
   return (
     <div className="bg-[#f0f0f0] min-h-screen">
       <div className="bg-white overflow-hidden w-full min-w-[1440px] flex flex-col">
-        <TrendingAdsSection />
+        <TrendingAdsSection onDownloadClick={() => setShowDownloadPopup(true)} />
         <FashionSection />
       </div>
+
+      <AppDownloadPopup
+        isOpen={showDownloadPopup}
+        onClose={() => setShowDownloadPopup(false)}
+      />
 
       <div className="max-w-[1440px] mx-auto px-8 py-8">
         <div className="grid grid-cols-[280px_1fr] gap-8">

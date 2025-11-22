@@ -81,7 +81,7 @@ export const FashionSection = (): JSX.Element => {
               src={iconProfile}
             />
             <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs text-center tracking-[0.40px] leading-4 whitespace-nowrap">
-              Abebe
+              Profile
             </span>
           </button>
 

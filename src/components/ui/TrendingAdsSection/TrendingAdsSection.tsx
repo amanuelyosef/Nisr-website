@@ -1,6 +1,10 @@
 import { Button } from "../button";
 
-export const TrendingAdsSection = (): JSX.Element => {
+interface TrendingAdsSectionProps {
+  onDownloadClick?: () => void;
+}
+
+export const TrendingAdsSection = ({ onDownloadClick }: TrendingAdsSectionProps): JSX.Element => {
   return (
     <section className="w-full bg-[#ffd9eb] py-2"> {/* Slightly increased section height */}
       <div className="container mx-auto px-20 flex flex-col md:flex-row items-center justify-between gap-3">
@@ -21,7 +25,10 @@ export const TrendingAdsSection = (): JSX.Element => {
             Join waitlist
           </Button>
 
-          <Button className="h-10 bg-[#fe2188] rounded-[40px] [font-family:'Montserrat',Helvetica] font-bold text-white text-sm tracking-[0] leading-[normal] px-4 hover:bg-[#fe2188]/90">
+          <Button
+            className="h-10 bg-[#fe2188] rounded-[40px] [font-family:'Montserrat',Helvetica] font-bold text-white text-sm tracking-[0] leading-[normal] px-4 hover:bg-[#fe2188]/90"
+            onClick={onDownloadClick}
+          >
             Download App
           </Button>
         </div>

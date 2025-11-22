@@ -72,10 +72,6 @@ export const CategoriesSection = (): JSX.Element => {
                     />
                   )}
                   
-                  {/* 
-                    FIX APPLIED:
-                    Removed 'absolute bottom-2'. Now it sits naturally under the image.
-                  */}
                   <div className="[font-family:'Nunito',Helvetica] font-semibold text-[#151414] text-sm tracking-[0] leading-[normal] text-center px-1 line-clamp-2">
                     {category.label}
                   </div>
