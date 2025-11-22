@@ -83,7 +83,7 @@ export const ProductDetailPage = (): JSX.Element => {
           <div className="flex flex-col gap-6">
             <Card className="bg-white border-0 shadow-sm rounded-[15px]">
               <CardContent className="p-6">
-                <h1 className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-5xl tracking-[0] leading-none">
+                <h1 className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-4xl tracking-[0] leading-none">
                   ETB 1000
                 </h1>
                 <div className="[font-family:'Nunito',Helvetica] font-normal text-[#120b0b] text-sm tracking-[0] leading-[normal] mb-6">
@@ -96,17 +96,29 @@ export const ProductDetailPage = (): JSX.Element => {
                 </p>
 
                 <div className="flex items-center gap-4 mb-2">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
                     <svg
-                      width="16"
-                      height="16"
+                      width="20"
+                      height="20"
                       viewBox="0 0 16 16"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M8 0C3.58862 0 0 3.58862 0 8C0 12.4114 3.58862 16 8 16C12.4114 16 16 12.4114 16 8C16 3.58862 12.4114 0 8 0ZM8 3.2C8.88366 3.2 9.6 3.91634 9.6 4.8C9.6 5.68366 8.88366 6.4 8 6.4C7.11634 6.4 6.4 5.68366 6.4 4.8C6.4 3.91634 7.11634 3.2 8 3.2ZM10.4 12H5.6V11.2C5.6 10.7582 5.95817 10.4 6.4 10.4H6.8V8H6.4C5.95817 8 5.6 7.64183 5.6 7.2V6.4H8.8V10.4H9.6C10.0418 10.4 10.4 10.7582 10.4 11.2V12Z"
-                        fill="#313131"
+                        d="M8 15C10 12 12 9.5 12 7C12 4.79086 10.2091 3 8 3C5.79086 3 4 4.79086 4 7C4 9.5 6 12 8 15Z"
+                        stroke="#313131"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <circle
+                        cx="8"
+                        cy="7"
+                        r="2"
+                        stroke="#313131"
+                        stroke-width="1"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                       />
                     </svg>
                     <span className="[font-family:'Nunito',Helvetica] font-medium text-[#313131] text-sm tracking-[0] leading-[normal]">
@@ -114,17 +126,32 @@ export const ProductDetailPage = (): JSX.Element => {
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      className={"w-6 h-6"}
                     >
-                      <path
-                        d="M16 7H14V5C14 2.79 12.21 1 10 1H8C5.79 1 4 2.79 4 5V7H2C1.45 7 1 7.45 1 8V16C1 16.55 1.45 17 2 17H16C16.55 17 17 16.55 17 16V8C17 7.45 16.55 7 16 7ZM6 5C6 3.9 6.9 3 8 3H10C11.1 3 12 3.9 12 5V7H6V5Z"
-                        fill="#00B207"
-                      />
+                      {/* The Box Shape */}
+                      <path d="M16.5 9.4 L 7.5 4.21 L 2.5 7.1 L 11.5 12.3" opacity="0" /> {/* Hidden guide path */}
+                      <path d="M22 17L16 20.5L10 17" />
+                      <path d="M16 20.5V9" />
+                      <path d="M22 6L22 17" />
+                      <path d="M10 17V6" />
+                      <path d="M22 6L16 2.5L10 6L16 9.5L22 6Z" />
+                      
+                      {/* Tape Detail on Box */}
+                      <path d="M13 4.5L19 8" />
+                      <path d="M16 9.5V11.5" />
+
+                      {/* Speed Lines (Left) */}
+                      <path d="M2 10H8" />
+                      <path d="M2 14H8" />
+                      <path d="M5 18H8" />
                     </svg>
                     <span className="[font-family:'Nunito',Helvetica] font-medium text-[#313131] text-sm tracking-[0] leading-[normal]">
                       Free Delivery
@@ -137,15 +164,17 @@ export const ProductDetailPage = (): JSX.Element => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 pt-10">
-                  <Button className="h-14 bg-[#fe2188] hover:bg-[#fe2188]/90 rounded-[10px] [font-family:'Nunito',Helvetica] font-bold text-white text-lg tracking-[0] leading-[normal]">
-                    <MessageSquareIcon className="w-5 h-5 mr-2" />
+                  <Button 
+                    className="h-14 bg-[#fe2188] hover:bg-[#fe2188]/90 rounded-[10px] [font-family:'Nunito',Helvetica] font-bold text-white text-[20px] tracking-[0] leading-[normal]"
+                    onClick={() => setShowDownloadPopup(true)}
+                  >
                     Chat
                   </Button>
                   <Button
                     variant="outline"
-                    className="h-14 bg-white border-2 border-[#fe2188] hover:bg-[#ffe4f0] rounded-[10px] [font-family:'Nunito',Helvetica] font-bold text-[#fe2188] text-lg tracking-[0] leading-[normal]"
+                    className="h-14 bg-[#ffc2d4] border-2 border-[#fe2188] hover:bg-[#ffe4f0] rounded-[10px] [font-family:'Nunito',Helvetica] font-bold text-[#fe2188] text-[20px] tracking-[0] leading-[normal]"
+                    onClick={() => setShowDownloadPopup(true)}
                   >
-                    <PhoneIcon className="w-5 h-5 mr-2" />
                     Call
                   </Button>
                 </div>
@@ -183,12 +212,14 @@ export const ProductDetailPage = (): JSX.Element => {
                   <Button
                     variant="outline"
                     className="h-12 border-2 border-[#ffb800] bg-white hover:bg-[#fff8e6] rounded-[10px] [font-family:'Nunito',Helvetica] font-semibold text-[#ffb800] text-base tracking-[0] leading-[normal]"
+                    onClick={() => setShowDownloadPopup(true)}
                   >
                     Feedback
                   </Button>
                   <Button
                     variant="outline"
                     className="h-12 border-2 border-[#fc3850] bg-white hover:bg-[#ffe4f0] rounded-[10px] [font-family:'Nunito',Helvetica] font-semibold text-[#fc3850] text-base tracking-[0] leading-[normal]"
+                    onClick={() => setShowDownloadPopup(true)}
                   >
                     Report this ad
                   </Button>
@@ -196,9 +227,8 @@ export const ProductDetailPage = (): JSX.Element => {
               </CardContent>
             </Card>
           </div>
-        </div>
 
-        <Card className="bg-white border-0 shadow-sm rounded-[15px] mt-12">
+          <Card className="bg-white border-0 shadow-sm rounded-[15px] mt-2">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="[font-family:'Nunito',Helvetica] font-bold text-black text-2xl tracking-[0] leading-[normal]">
@@ -210,11 +240,12 @@ export const ProductDetailPage = (): JSX.Element => {
             </div>
             <p className="[font-family:'Nunito',Helvetica] font-normal text-[#313131] text-base tracking-[0] leading-6">
               Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when
+              
             </p>
           </CardContent>
         </Card>
+
+        </div>
 
         <div className="mt-12">
           <h2 className="[font-family:'Nunito',Helvetica] font-bold text-black text-3xl tracking-[0] leading-[normal] mb-8">

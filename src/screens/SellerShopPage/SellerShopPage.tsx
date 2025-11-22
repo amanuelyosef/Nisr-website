@@ -156,13 +156,17 @@ export const SellerShopPage = (): JSX.Element => {
         </div>
 
         <div className="space-y-3 pt-2">
-          <Button className="w-full h-14 bg-white border-3 border-[#FF5252] hover:bg-[#FFF3E0] rounded-[16px] [font-family:'Nunito',Helvetica] font-bold text-[#FF5252] text-lg tracking-[0] leading-[normal] transition-colors">
+          <Button 
+            className="w-full h-14 bg-white border-3 border-[#FF5252] hover:bg-[#FFF3E0] rounded-[16px] [font-family:'Nunito',Helvetica] font-bold text-[#FF5252] text-lg tracking-[0] leading-[normal] transition-colors"
+            onClick={() => setShowDownloadPopup(true)}
+          >
             Call
           </Button>
 
           <Button
             variant="outline"
             className="w-full h-14 bg-[#E8E8E8] border-0 hover:bg-[#D8D8D8] rounded-[16px] [font-family:'Nunito',Helvetica] font-semibold text-[#120b0b] text-base tracking-[0] leading-[normal] flex items-center justify-center gap-2 transition-colors"
+            onClick={() => setShowDownloadPopup(true)}
           >
             <span>Feedback</span>
             <svg
@@ -188,8 +192,8 @@ export const SellerShopPage = (): JSX.Element => {
 </aside>
 
           <main>
-            <div className="mb-8">
-              <h1 className="[font-family:'Nunito',Helvetica] font-bold text-black text-4xl tracking-[0] leading-[normal]">
+            <div className="mb-4">
+              <h1 className="[font-family:'Nunito',Helvetica] font-bold text-black text-3xl tracking-[0] leading-[normal]">
                 All items
               </h1>
             </div>
