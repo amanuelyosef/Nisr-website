@@ -36,12 +36,12 @@ const categories = [
 export const CategoriesSection = (): JSX.Element => {
   return (
     <section className="w-full bg-[#ffe4f087] py-10 px-6">
-      <div className="max-w-[1440px] mx-auto flex flex-col gap-6">
+      <div className="max-w-[80%] mx-auto flex flex-col gap-6">
         <div className="grid grid-cols-3 gap-6">
           {topImages.map((image, index) => (
             <div key={index} className="relative group cursor-pointer">
               <img
-                className="w-full h-[295px] rounded-[20px] object-cover"
+                className="w-full h-[250px] rounded-[20px] object-cover"
                 alt={image.alt}
                 src={image.src}
               />
@@ -49,8 +49,8 @@ export const CategoriesSection = (): JSX.Element => {
           ))}
         </div>
 
-        <div className="flex flex-col gap-8 mt-4">
-          <h2 className="[font-family:'Nunito',Helvetica] font-bold text-black text-4xl tracking-[0] leading-[normal]">
+        <div className="flex flex-col gap-5">
+          <h2 className="[font-family:'Nunito',Helvetica] font-bold text-black text-[28px] tracking-[0] leading-[normal] px-22">
             Categories
           </h2>
 
@@ -60,17 +60,23 @@ export const CategoriesSection = (): JSX.Element => {
                 key={index}
                 className="bg-white rounded-[10px] border-0 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
               >
-                <CardContent className="p-0 flex flex-col items-center justify-center h-[120px] relative">
+                <CardContent className="p-2 flex flex-col items-center justify-center h-[120px] gap-2">
                   {category.isMore ? (
-                    <MoreHorizontalIcon className="w-[91px] h-[91px] text-gray-700" />
+                    <MoreHorizontalIcon className="w-[80px] h-[80px] text-gray-700" />
                   ) : (
                     <img
-                      className="w-full h-[90px] object-contain px-3 pt-2"
+                      /* Reduced height slightly to 80px to balance with text */
+                      className="w-full h-[80px] object-contain" 
                       alt={category.alt}
                       src={category.src}
                     />
                   )}
-                  <div className="absolute bottom-2 [font-family:'Nunito',Helvetica] font-semibold text-[#151414] text-sm tracking-[0] leading-[normal] text-center px-2">
+                  
+                  {/* 
+                    FIX APPLIED:
+                    Removed 'absolute bottom-2'. Now it sits naturally under the image.
+                  */}
+                  <div className="[font-family:'Nunito',Helvetica] font-semibold text-[#151414] text-sm tracking-[0] leading-[normal] text-center px-1 line-clamp-2">
                     {category.label}
                   </div>
                 </CardContent>

@@ -16,12 +16,12 @@ export const TrendingAdsSection = (): JSX.Element => {
         <div className="flex flex-col sm:flex-row items-center gap-3">
           <Button
             variant="outline"
-            className="h-8 bg-[#ffc2d4] rounded-[40px] border-[2.5px] border-solid border-[#fe2188] [font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-sm tracking-[0] leading-[normal] px-3 hover:bg-[#ffc2d4] hover:text-[#fe2188]"
+            className="h-10 bg-[#ffc2d4] rounded-[40px] border-[2.5px] border-solid border-[#fe2188] [font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-sm tracking-[0] leading-[normal] px-3 hover:bg-[#ffc2d4] hover:text-[#fe2188]"
           >
             Join waitlist
           </Button>
 
-          <Button className="h-8 bg-[#fe2188] rounded-[40px] [font-family:'Montserrat',Helvetica] font-bold text-white text-sm tracking-[0] leading-[normal] px-4 hover:bg-[#fe2188]/90">
+          <Button className="h-10 bg-[#fe2188] rounded-[40px] [font-family:'Montserrat',Helvetica] font-bold text-white text-sm tracking-[0] leading-[normal] px-4 hover:bg-[#fe2188]/90">
             Download App
           </Button>
         </div>
