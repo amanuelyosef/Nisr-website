@@ -129,13 +129,13 @@ export const FashionSection = ({ onShowDownloadPopup }: FashionSectionProps): JS
   );
 
   return (
-    <header className="w-full bg-white pb-20 lg:pb-5 pt-5 px-4 sm:px-6 lg:px-8 relative">
+    <header className="w-full bg-white pb-6 lg:pb-5 pt-1 px-4 sm:px-6 lg:px-8 relative">
       {/* Mobile layout */}
-      <div className="flex flex-col gap-4 lg:hidden">
+      <div className="flex flex-col gap-0 lg:hidden">
         <div className="flex items-center justify-between">
           <button
             type="button"
-            className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-[30px] tracking-[0] leading-[normal] whitespace-nowrap bg-transparent border-none cursor-pointer p-0 m-0"
+            className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-2xl sm:text-[30px] tracking-[0] leading-[normal] whitespace-nowrap bg-transparent border-none cursor-pointer p-0 m-0"
             onClick={() => navigate("/")}
           >
             Nisr Market
@@ -148,8 +148,29 @@ export const FashionSection = ({ onShowDownloadPopup }: FashionSectionProps): JS
             <img className="w-[28px] h-[28px]" alt="Notification" src={iconNotification} />
           </button>
         </div>
-        <div className="w-full">
-          {renderSearchBar()}
+        <div className="w-full mb-0">
+          {/* Smaller search bar label on mobile */}
+          <div className="block sm:hidden">
+            <div className="relative flex items-center">
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+                <SearchIcon className="w-5 h-5 text-gray-400" />
+              </div>
+              <Input
+                type="text"
+                placeholder="Search"
+                className="w-full h-10 pl-10 pr-[90px] rounded-[50px] border border-black bg-white [font-family:'Nunito',Helvetica] font-normal text-[#bcb8b8] text-base"
+              />
+              <Button
+                onClick={handleSearch}
+                className="absolute right-0 top-0 h-10 w-[70px] bg-[#fa6bad9e] hover:bg-[#fa6bad] rounded-[50px] [font-family:'Nunito',Helvetica] font-semibold text-black text-xs"
+              >
+                Search
+              </Button>
+            </div>
+          </div>
+          <div className="hidden sm:block">
+            {renderSearchBar()}
+          </div>
         </div>
       </div>
 
