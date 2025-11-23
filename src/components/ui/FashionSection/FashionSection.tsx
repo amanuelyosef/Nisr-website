@@ -19,9 +19,95 @@ export const FashionSection = ({ onShowDownloadPopup }: FashionSectionProps): JS
     navigate("/search");
   };
 
+  const renderNav = (className = "") => (
+    <nav className={`flex items-center gap-3 ${className}`}>
+      <button className="flex flex-col items-center gap-1 relative" onClick={onShowDownloadPopup}>
+        <img
+          className="w-[34px] h-[33px]"
+          alt="Notification"
+          src={iconNotification}
+        />
+        <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs tracking-[0.40px] leading-4 whitespace-nowrap">
+          Notification
+        </span>
+      </button>
+
+      <button className="flex flex-col items-center gap-1 px-1" onClick={onShowDownloadPopup}>
+        <img
+          className="w-[34px] h-[30px]"
+          alt="Shopping cart"
+          src={iconCart}
+        />
+        <span className="[font-family:'Nunito',Helvetica] font-normal text-lightgray-11 text-xs text-center tracking-[0.40px] leading-4">
+          Cart
+        </span>
+      </button>
+
+      <button className="flex flex-col items-center gap-[5px] px-1" onClick={onShowDownloadPopup}>
+        <img className="w-[29px] h-[29px]" alt="Chat" src={iconChat} />
+        <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs text-center tracking-[0.40px] leading-4 whitespace-nowrap">
+          Chat
+        </span>
+      </button>
+
+      <button className="flex flex-col items-center gap-1 px-1" onClick={onShowDownloadPopup}>
+        <img
+          className="w-[33px] h-[31px]"
+          alt="Profile"
+          src={iconProfile}
+        />
+        <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs text-center tracking-[0.40px] leading-4 whitespace-nowrap">
+          Profile
+        </span>
+      </button>
+
+      <span className="mx-2" />
+      <Button className="h-[45px] w-[110px] bg-[#fe2188] hover:bg-[#fe2188]/90 rounded-[10px] [font-family:'Montserrat',Helvetica] font-bold text-white text-[18px] tracking-[0] leading-[normal]" onClick={onShowDownloadPopup}>
+        SELL
+      </Button>
+    </nav>
+  );
+
+  const renderSearchBar = () => (
+    <div className="relative flex items-center">
+      <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+        <SearchIcon className="w-6 h-6 text-gray-400" />
+      </div>
+      <Input
+        type="text"
+        placeholder="Search"
+        className="w-full h-[45px] pl-11 pr-[100px] rounded-[50px] border border-black bg-white [font-family:'Nunito',Helvetica] font-normal text-[#bcb8b8] text-2xl"
+      />
+      <Button
+        onClick={handleSearch}
+        className="absolute right-0 top-0 h-[45px] w-[89px] bg-[#fa6bad9e] hover:bg-[#fa6bad] rounded-[50px] [font-family:'Nunito',Helvetica] font-semibold text-black text-base"
+      >
+        Search
+      </Button>
+    </div>
+  );
+
   return (
-    <header className="w-full bg-white py-5 px-8 relative">
-      <div className="flex items-center justify-between gap-8 px-4">
+    <header className="w-full bg-white py-5 px-4 sm:px-6 lg:px-8 relative">
+      {/* Mobile layout */}
+      <div className="flex flex-col gap-4 lg:hidden">
+        <div className="flex items-center justify-between gap-4">
+          <button
+            type="button"
+            className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-[30px] tracking-[0] leading-[normal] whitespace-nowrap bg-transparent border-none cursor-pointer p-0 m-0"
+            onClick={() => navigate("/")}
+          >
+            Nisr Market
+          </button>
+          {renderNav("gap-4 flex-wrap justify-end")}
+        </div>
+        <div className="w-full">
+          {renderSearchBar()}
+        </div>
+      </div>
+
+      {/* Desktop layout */}
+      <div className="hidden lg:flex items-center justify-between gap-8 px-4">
         <button
           type="button"
           className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-[30px] tracking-[0] leading-[normal] whitespace-nowrap bg-transparent border-none cursor-pointer p-0 m-0"
@@ -29,72 +115,10 @@ export const FashionSection = ({ onShowDownloadPopup }: FashionSectionProps): JS
         >
           Nisr Market
         </button>
-
-        <div className="flex-1 max-w-[532px] relative">
-          <div className="relative flex items-center">
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
-              <SearchIcon className="w-6 h-6 text-gray-400" />
-            </div>
-            <Input
-              type="text"
-              placeholder="Search"
-              className="w-full h-[45px] pl-11 pr-[100px] rounded-[50px] border border-black bg-white [font-family:'Nunito',Helvetica] font-normal text-[#bcb8b8] text-2xl"
-            />
-            <Button
-              onClick={handleSearch}
-              className="absolute right-0 top-0 h-[45px] w-[89px] bg-[#fa6bad9e] hover:bg-[#fa6bad] rounded-[50px] [font-family:'Nunito',Helvetica] font-semibold text-black text-base"
-            >
-              Search
-            </Button>
-          </div>
+        <div className="flex-1 max-w-[532px]">
+          {renderSearchBar()}
         </div>
-
-        <nav className="flex items-center gap-3">
-          <button className="flex flex-col items-center gap-1 relative" onClick={onShowDownloadPopup}>
-            <img
-              className="w-[34px] h-[33px]"
-              alt="Notification"
-              src={iconNotification}
-            />
-            <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs tracking-[0.40px] leading-4 whitespace-nowrap">
-              Notification
-            </span>
-          </button>
-
-          <button className="flex flex-col items-center gap-1 px-1" onClick={onShowDownloadPopup}>
-            <img
-              className="w-[34px] h-[30px]"
-              alt="Shopping cart"
-              src={iconCart}
-            />
-            <span className="[font-family:'Nunito',Helvetica] font-normal text-lightgray-11 text-xs text-center tracking-[0.40px] leading-4">
-              Cart
-            </span>
-          </button>
-
-          <button className="flex flex-col items-center gap-[5px] px-1" onClick={onShowDownloadPopup}>
-            <img className="w-[29px] h-[29px]" alt="Chat" src={iconChat} />
-            <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs text-center tracking-[0.40px] leading-4 whitespace-nowrap">
-              Chat
-            </span>
-          </button>
-
-          <button className="flex flex-col items-center gap-1 px-1" onClick={onShowDownloadPopup}>
-            <img
-              className="w-[33px] h-[31px]"
-              alt="Profile"
-              src={iconProfile}
-            />
-            <span className="[font-family:'Nunito',Helvetica] font-normal text-black text-xs text-center tracking-[0.40px] leading-4 whitespace-nowrap">
-              Profile
-            </span>
-          </button>
-
-          <span className="mx-2" />
-          <Button className="h-[45px] w-[110px] bg-[#fe2188] hover:bg-[#fe2188]/90 rounded-[10px] [font-family:'Montserrat',Helvetica] font-bold text-white text-[18px] tracking-[0] leading-[normal]" onClick={onShowDownloadPopup}>
-            SELL
-          </Button>
-        </nav>
+        {renderNav()}
       </div>
     </header>
   );
