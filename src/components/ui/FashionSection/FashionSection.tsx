@@ -1,4 +1,4 @@
-import { SearchIcon } from "lucide-react";
+import { HomeIcon, SearchIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../button";
 import { Input } from "../input";
@@ -87,11 +87,52 @@ export const FashionSection = ({ onShowDownloadPopup }: FashionSectionProps): JS
     </div>
   );
 
+  const renderMobileBottomNav = () => (
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200">
+      <div className="max-w-md mx-auto px-4 py-2 flex items-center justify-between">
+        <button
+          className="flex flex-col items-center text-xs font-semibold text-[#fe2188]"
+          onClick={() => navigate("/")}
+        >
+          <HomeIcon className="w-6 h-6 text-[#fe2188]" />
+          <span>Home</span>
+        </button>
+        <button
+          className="flex flex-col items-center text-xs font-semibold text-[#313131]"
+          onClick={onShowDownloadPopup}
+        >
+          <img className="w-6 h-6" alt="Cart" src={iconCart} />
+          <span>Cart</span>
+        </button>
+        <Button
+          className="px-5 py-2 bg-[#fe2188] rounded-full text-white text-sm font-bold"
+          onClick={onShowDownloadPopup}
+        >
+          Sell
+        </Button>
+        <button
+          className="flex flex-col items-center text-xs font-semibold text-[#313131]"
+          onClick={onShowDownloadPopup}
+        >
+          <img className="w-6 h-6" alt="Chat" src={iconChat} />
+          <span>Chat</span>
+        </button>
+        <button
+          className="flex flex-col items-center text-xs font-semibold text-[#313131]"
+          onClick={onShowDownloadPopup}
+        >
+          <img className="w-6 h-6" alt="Profile" src={iconProfile} />
+          <span>Profile</span>
+        </button>
+      </div>
+    </div>
+  );
+
   return (
-    <header className="w-full bg-white py-5 px-4 sm:px-6 lg:px-8 relative">
+    <header className="w-full bg-white pb-20 lg:pb-5 pt-5 px-4 sm:px-6 lg:px-8 relative">
       {/* Mobile layout */}
       <div className="flex flex-col gap-4 lg:hidden">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between">
           <button
             type="button"
             className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-[30px] tracking-[0] leading-[normal] whitespace-nowrap bg-transparent border-none cursor-pointer p-0 m-0"
@@ -99,7 +140,13 @@ export const FashionSection = ({ onShowDownloadPopup }: FashionSectionProps): JS
           >
             Nisr Market
           </button>
-          {renderNav("gap-4 flex-wrap justify-end")}
+          <button
+            className="p-2 rounded-full border border-transparent hover:bg-gray-100"
+            onClick={onShowDownloadPopup}
+            aria-label="Notifications"
+          >
+            <img className="w-[28px] h-[28px]" alt="Notification" src={iconNotification} />
+          </button>
         </div>
         <div className="w-full">
           {renderSearchBar()}
@@ -120,6 +167,8 @@ export const FashionSection = ({ onShowDownloadPopup }: FashionSectionProps): JS
         </div>
         {renderNav()}
       </div>
+
+      {renderMobileBottomNav()}
     </header>
   );
 };
