@@ -11,7 +11,7 @@ export const HomePage = (): JSX.Element => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
   const [showWaitlistPopup, setShowWaitlistPopup] = useState(false);
   return (
-    <div className="bg-white overflow-hidden w-full min-w-[1440px] flex flex-col">
+    <div className="bg-white overflow-hidden w-full flex flex-col">
       <TrendingAdsSection
         onDownloadClick={() => setShowDownloadPopup(true)}
         onWaitlistClick={() => setShowWaitlistPopup(true)}

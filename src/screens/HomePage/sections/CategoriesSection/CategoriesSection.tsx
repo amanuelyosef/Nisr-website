@@ -62,9 +62,9 @@ export const CategoriesSection = (): JSX.Element => {
   ];
 
   return (
-    <section className="w-full bg-[#ffe4f087] py-10 px-6">
-      <div className="max-w-[80%] mx-auto flex flex-col gap-6">
-        <div className="grid grid-cols-3 gap-6">
+    <section className="w-full bg-[#ffe4f087] py-10 px-4">
+      <div className="max-w-screen-xl mx-auto px-4 flex flex-col gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {topImages.map((image, index) => (
             <div key={index} className="relative group cursor-pointer">
               <img
@@ -81,7 +81,7 @@ export const CategoriesSection = (): JSX.Element => {
             Categories
           </h2>
 
-          <div className="grid grid-cols-5 gap-6 max-w-[1000px] mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-[1000px] mx-auto">
             {categoryCards.map((category, index) => (
               <Card
                 key={index}
