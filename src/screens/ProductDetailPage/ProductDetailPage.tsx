@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { MessageSquareIcon, PhoneIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
-import { TrendingAdsSection } from "../../components/ui/TrendingAdsSection";
-import { FashionSection } from "../../components/ui/FashionSection";
+import { GetAppSection } from "../../components/ui/GetAppSection";
+import { TopAppBarSection } from "../../components/ui/TopAppBarSection";
 import AppDownloadPopup from "../../components/ui/AppDownloadPopup";
 import WaitlistPopup from "../../components/ui/WaitlistPopup";
 import img19_2 from "../../assets/images/image-19-2.png";
@@ -53,11 +52,11 @@ export const ProductDetailPage = (): JSX.Element => {
   return (
     <div className="bg-[#F0F0F0] min-h-screen">
       <div className="bg-white overflow-hidden w-full flex flex-col">
-        <TrendingAdsSection
+        <GetAppSection
           onDownloadClick={() => setShowDownloadPopup(true)}
           onWaitlistClick={() => setShowWaitlistPopup(true)}
         />
-        <FashionSection onShowDownloadPopup={() => setShowDownloadPopup(true)} />
+        <TopAppBarSection onShowDownloadPopup={() => setShowDownloadPopup(true)} />
       </div>
 
       <AppDownloadPopup

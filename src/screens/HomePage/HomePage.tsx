@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { CategoriesSection } from "./sections/CategoriesSection";
 import { ElectronicsSection } from "./sections/ElectronicsSection";
-import { FashionSection } from "../../components/ui/FashionSection";
+import { TopAppBarSection } from "../../components/ui/TopAppBarSection";
 import { TechProductsSection } from "./sections/TechProductsSection";
-import { TrendingAdsSection } from "../../components/ui/TrendingAdsSection";
+import { GetAppSection } from "../../components/ui/GetAppSection";
 import AppDownloadPopup from "../../components/ui/AppDownloadPopup";
 import WaitlistPopup from "../../components/ui/WaitlistPopup";
 
@@ -12,11 +12,11 @@ export const HomePage = (): JSX.Element => {
   const [showWaitlistPopup, setShowWaitlistPopup] = useState(false);
   return (
     <div className="bg-white overflow-hidden w-full flex flex-col">
-      <TrendingAdsSection
+      <GetAppSection
         onDownloadClick={() => setShowDownloadPopup(true)}
         onWaitlistClick={() => setShowWaitlistPopup(true)}
       />
-      <FashionSection onShowDownloadPopup={() => setShowDownloadPopup(true)} />
+      <TopAppBarSection onShowDownloadPopup={() => setShowDownloadPopup(true)} />
       <CategoriesSection />
       <TechProductsSection />
       <ElectronicsSection />
