@@ -53,17 +53,17 @@ export const TechProductsSection = (): JSX.Element => {
               {techProducts.map((product) => (
                 <Card
                   key={product.id}
-                  className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow min-w-[180px] flex-shrink-0 lg:min-w-0"
+                  className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-40 sm:min-w-[180px] flex-shrink-0 lg:min-w-0"
                   onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <CardContent className="p-0">
                     <img
                       src={product.image}
                       alt="Product"
-                      className="w-full h-[157px] object-cover rounded-t-lg"
+                      className="w-full h-32 sm:h-[157px] object-cover rounded-t-lg"
                     />
-                    <div className="p-2 text-center">
-                      <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[18px] tracking-[0] leading-4">
+                    <div className="p-2">
+                      <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[16px] sm:text-[18px] tracking-[0] leading-4">
                         {product.price}
                       </span>
                     </div>
@@ -87,17 +87,17 @@ export const TechProductsSection = (): JSX.Element => {
                 {fashionProducts.map((product) => (
                   <Card
                   key={product.id}
-                  className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow min-w-[180px] flex-shrink-0 lg:min-w-0"
+                  className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-40 sm:min-w-[180px] flex-shrink-0 lg:min-w-0"
                   onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <CardContent className="p-0">
                     <img
                       src={product.image}
                       alt="Product"
-                      className="w-full h-[157px] object-cover rounded-t-lg"
+                      className="w-full h-32 sm:h-[157px] object-cover rounded-t-lg"
                     />
-                    <div className="p-2 text-center">
-                      <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[18px] tracking-[0] leading-4">
+                    <div className="p-2">
+                      <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[16px] sm:text-[18px] tracking-[0] leading-4">
                         {product.price}
                       </span>
                     </div>
@@ -120,17 +120,17 @@ export const TechProductsSection = (): JSX.Element => {
                 {stationaryProducts.map((product) => (
                   <Card
                   key={product.id}
-                  className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow min-w-[180px] flex-shrink-0 lg:min-w-0"
+                  className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-40 sm:min-w-[180px] flex-shrink-0 lg:min-w-0"
                   onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <CardContent className="p-0">
                     <img
                       src={product.image}
                       alt="Product"
-                      className="w-full h-[157px] object-cover rounded-t-lg"
+                      className="w-full h-32 sm:h-[157px] object-cover rounded-t-lg"
                     />
-                    <div className="p-2 text-center">
-                      <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[18px] tracking-[0] leading-4">
+                    <div className="p-2">
+                      <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[16px] sm:text-[18px] tracking-[0] leading-4">
                         {product.price}
                       </span>
                     </div>
