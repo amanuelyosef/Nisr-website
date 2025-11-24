@@ -263,7 +263,7 @@ export const SearchResultsPage = (): JSX.Element => {
       />
       <WaitlistPopup isOpen={showWaitlistPopup} onClose={() => setShowWaitlistPopup(false)} />
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-2 sm:py-8">
+      <div className="max-w-[1440px] mx-auto px-2 sm:px-8 py-2 sm:py-8">
         <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[280px_1fr]">
           <aside className="space-y-6 hidden lg:block">
             {filterContent}
@@ -272,15 +272,15 @@ export const SearchResultsPage = (): JSX.Element => {
           <main>
             <div className="flex flex-wrap items-center justify-between mb-4">
 
-              <h1 className="my-0 [font-family:'Nunito',Helvetica] font-bold text-black text-[22px] sm:text-3xl md:text-4xl lg:text-3xl tracking-[0] leading-tight text-left lg:w-auto">
-                Searched Results
+              <h1 className="my-0 [font-family:'Nunito',Helvetica] font-bold text-black text-[20px] sm:text-3xl md:text-4xl lg:text-3xl tracking-[0] leading-tight text-left lg:w-auto">
+                Search results
               </h1>
               <div className="flex items-center gap-0">
                 <div className="flex items-center gap-2">
                   <div className="relative" ref={sortDropdownRef}>
                     <button
                       type="button"
-                      className="inline-flex items-center gap-0 rounded-full border border-[#fe2188] bg-white px-4 py-2 text-sm [font-family:'Nunito',Helvetica] text-[#fe2188] font-semibold text-base shadow-sm hover:bg-[#fe2188]/10 transition-colors"
+                      className="inline-flex items-center gap-0 rounded-full border border-[#fe2188] bg-white px-3 py-2 text-sm [font-family:'Nunito',Helvetica] text-[#fe2188] font-semibold text-base shadow-sm hover:bg-[#fe2188]/10 transition-colors"
                       onClick={() => setIsSortMenuOpen((prev) => !prev)}
                     >
                       <span>Sort</span>
@@ -317,10 +317,9 @@ export const SearchResultsPage = (): JSX.Element => {
                       </ul>
                     )}
                   </div>
-                  <span className="h-6 w-px bg-[#e0e0e0] mx-2 hidden sm:inline-block"></span>
                   <button
                     type="button"
-                    className="inline-flex items-center gap-2 rounded-full border border-[#fe2188] px-4 py-2 text-sm font-semibold text-[#fe2188] [font-family:'Nunito',Helvetica] hover:bg-[#fe2188]/10 transition-colors lg:hidden"
+                    className="inline-flex items-center gap-2 rounded-full border border-[#fe2188] px-3 py-2 text-sm font-semibold text-[#fe2188] [font-family:'Nunito',Helvetica] hover:bg-[#fe2188]/10 transition-colors lg:hidden"
                     onClick={() => setIsFilterOpen(true)}
                   >
                     <svg
