@@ -84,12 +84,12 @@ export const CategoriesSection = (): JSX.Element => {
             Categories
           </h2>
 
-          <div className="w-full overflow-x-auto pb-2 scrollbar-hide">
+          <div className="w-full overflow-x-auto pb-2 scrollbar-hide lg:max-w-4xl lg:mx-auto">
             <div className="flex gap-3 lg:grid lg:grid-cols-5 lg:gap-6">
               {categoryCards.map((category, index) => (
                 <Card
                   key={index}
-                  className="bg-white rounded-[8px] border-0 shadow-sm hover:shadow-md transition-shadow cursor-pointer min-w-[90px] max-w-[110px] flex-shrink-0 lg:min-w-0 lg:max-w-none"
+                  className="bg-white rounded-[8px] border-0 shadow-sm hover:shadow-md transition-shadow cursor-pointer min-w-[90px] max-w-[110px] flex-shrink-0 lg:min-w-0 lg:max-w-[160px]"
                 >
                   <CardContent className="p-1 flex flex-col items-center justify-center h-[90px] gap-1 sm:p-2 sm:h-[100px] md:h-[120px] sm:gap-2">
                     {"isToggle" in category ? (
@@ -114,7 +114,6 @@ export const CategoriesSection = (): JSX.Element => {
                     <div className="[font-family:'Nunito',Helvetica] font-semibold text-[#151414] text-xs sm:text-sm tracking-[0] leading-[normal] text-center px-1 line-clamp-2">
                       {category.label}
                     </div>
-                    {/* No toggle label button below icon, icon only */}
                   </CardContent>
                 </Card>
               ))}
