@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CategoriesSection } from "./sections/CategoriesSection";
-import { RecommendedProductsSection } from "./sections/RecommendedProductsSection";
+import { RecommendedProductsSection } from "../../components/ui/RecommendedProductsSection";
 import { TopAppBarSection } from "../../components/ui/TopAppBarSection";
 import { TrendProductsSection } from "./sections/TrendProductsSection";
 import { GetAppSection } from "../../components/ui/GetAppSection";
@@ -19,7 +19,7 @@ export const HomePage = (): JSX.Element => {
       <TopAppBarSection onShowDownloadPopup={() => setShowDownloadPopup(true)} />
       <CategoriesSection />
       <TrendProductsSection />
-      <RecommendedProductsSection />
+      <RecommendedProductsSection title="Trending" />
       <AppDownloadPopup 
         isOpen={showDownloadPopup} 
         onClose={() => setShowDownloadPopup(false)} 

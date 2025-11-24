@@ -1,4 +1,4 @@
-import { HomeIcon, SearchIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../button";
 import { Input } from "../input";

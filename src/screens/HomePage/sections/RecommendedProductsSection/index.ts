@@ -1,1 +1,0 @@
-export { RecommendedProductsSection } from "./RecommendedProductsSection";

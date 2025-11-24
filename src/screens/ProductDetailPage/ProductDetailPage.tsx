@@ -2,47 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
+import { RecommendedProductsSection } from "../../components/ui/RecommendedProductsSection";
 import { GetAppSection } from "../../components/ui/GetAppSection";
 import { TopAppBarSection } from "../../components/ui/TopAppBarSection";
 import AppDownloadPopup from "../../components/ui/AppDownloadPopup";
 import WaitlistPopup from "../../components/ui/WaitlistPopup";
 import img19_2 from "../../assets/images/image-19-2.png";
-import img23_1 from "../../assets/images/image-23-1.png";
-import img21_2 from "../../assets/images/image-21-2.png";
-import img24_1 from "../../assets/images/image-24-1.png";
 
-const discoverMoreProducts = [
-  {
-    id: 1,
-    image: img19_2,
-    description: "Brand new Lamborghini 2025 made in USA high speed and ...",
-    price: "ETB 1,000",
-  },
-  {
-    id: 2,
-    image: img23_1,
-    description: "Brand new Lamborghini 2025 made in USA high speed and ...",
-    price: "ETB 1,000",
-  },
-  {
-    id: 3,
-    image: img21_2,
-    description: "Brand new Lamborghini 2025 made in USA high speed and ...",
-    price: "ETB 1,000",
-  },
-  {
-    id: 4,
-    image: img24_1,
-    description: "Brand new Lamborghini 2025 made in USA high speed and ...",
-    price: "ETB 1,000",
-  },
-  {
-    id: 5,
-    image: img19_2,
-    description: "Brand new Lamborghini 2025 made in USA high speed and ...",
-    price: "ETB 1,000",
-  },
-];
 
 export const ProductDetailPage = (): JSX.Element => {
   const navigate = useNavigate();
@@ -309,37 +275,8 @@ export const ProductDetailPage = (): JSX.Element => {
 
         </div>
 
-        <div className="mt-12">
-          <h2 className="[font-family:'Nunito',Helvetica] font-bold text-black text-3xl tracking-[0] leading-[normal] mb-8">
-            Discover More
-          </h2>
-          <div className="grid grid-cols-5 gap-6">
-            {discoverMoreProducts.map((product) => (
-              <Card
-                key={product.id}
-                className="bg-white rounded-[15px] border-0 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => navigate(`/product/${product.id}`)}
-              >
-                <CardContent className="p-0">
-                  <div className="relative w-full aspect-[4/3]">
-                    <img
-                      className="w-full h-full object-cover rounded-t-[15px]"
-                      alt="Product"
-                      src={product.image}
-                    />
-                  </div>
-                  <div className="p-3">
-                    <p className="[font-family:'Nunito',Helvetica] font-medium text-[#313131] text-xs tracking-[0] leading-4 mb-2 line-clamp-2">
-                      {product.description}
-                    </p>
-                    <p className="[font-family:'Nunito',Helvetica] font-extrabold text-[#120b0b] text-base tracking-[0] leading-4">
-                      {product.price}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+        <div className="">
+          <RecommendedProductsSection title="Discover More"/>
         </div>
       </div>
     </div>
