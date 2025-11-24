@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { CategoriesSection } from "./sections/CategoriesSection";
-import { ElectronicsSection } from "./sections/ElectronicsSection";
+import { RecommendedProductsSection } from "./sections/RecommendedProductsSection";
 import { TopAppBarSection } from "../../components/ui/TopAppBarSection";
-import { TechProductsSection } from "./sections/TechProductsSection";
+import { TrendProductsSection } from "./sections/TrendProductsSection";
 import { GetAppSection } from "../../components/ui/GetAppSection";
 import AppDownloadPopup from "../../components/ui/AppDownloadPopup";
 import WaitlistPopup from "../../components/ui/WaitlistPopup";
@@ -18,8 +18,8 @@ export const HomePage = (): JSX.Element => {
       />
       <TopAppBarSection onShowDownloadPopup={() => setShowDownloadPopup(true)} />
       <CategoriesSection />
-      <TechProductsSection />
-      <ElectronicsSection />
+      <TrendProductsSection />
+      <RecommendedProductsSection />
       <AppDownloadPopup 
         isOpen={showDownloadPopup} 
         onClose={() => setShowDownloadPopup(false)} 

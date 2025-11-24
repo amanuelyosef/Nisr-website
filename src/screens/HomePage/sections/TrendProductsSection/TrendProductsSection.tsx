@@ -14,7 +14,7 @@ import unsplashPdds9_2 from "../../../../assets/images/unsplash-pdds9xswyom-2.pn
 import image18 from "../../../../assets/images/image-18.png";
 import unsplash0vsk2_1 from "../../../../assets/images/unsplash-0vsk2-9dkqo-1.png";
 
-const techProducts = [
+const trendProducts = [
   { id: 1, image: unsplashPdds9_1, price: "ETB 1,000" },
   { id: 2, image: unsplashYtb, price: "ETB 1,000" },
   { id: 3, image: unsplash9u18_1, price: "ETB 1,000" },
@@ -35,7 +35,7 @@ const stationaryProducts = [
   { id: 12, image: unsplash0vsk2_1, price: "ETB 1,000" },
 ];
 
-export const TechProductsSection = (): JSX.Element => {
+export const TrendProductsSection = (): JSX.Element => {
   const navigate = useNavigate();
 
   return (
@@ -45,12 +45,12 @@ export const TechProductsSection = (): JSX.Element => {
           <CardContent className="px-0 sm:px-5 py-2 sm:py-5 ">
             <div className="flex items-center gap-0 sm:gap-2 mb-2">
               <h2 className="[font-family:'Nunito',Helvetica] font-extrabold text-black text-[22px] sm:text-[26px] md:text-[30px] tracking-[0.40px] leading-none px-2">
-                Tech Products
+                Trend Products
               </h2>
               <ChevronRightIcon className="w-5 h-5 text-black mt-0 sm:mt-1" />
             </div>
             <div className="flex gap-x-4 sm:gap-4 overflow-x-auto scrollbar-hide px-4 sm:px-0 pt-0 sm:pt-4 lg:grid lg:grid-cols-3 lg:gap-4 lg:gap-y-10">
-              {techProducts.map((product) => (
+              {trendProducts.map((product) => (
                 <Card
                   key={product.id}
                   className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-40 sm:min-w-[180px] flex-shrink-0 lg:min-w-0"

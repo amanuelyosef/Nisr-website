@@ -78,14 +78,14 @@ const productData = [
   },
 ];
 
-export const ElectronicsSection = (): JSX.Element => {
+export const RecommendedProductsSection = (): JSX.Element => {
   const navigate = useNavigate();
 
   return (
     <section className="w-full bg-[#efefef] py-4 px-2 sm:py-6 sm:px-4 md:py-9 md:px-6">
       <div className="max-w-[1262px] mx-auto">
         <h2 className="[font-family:'Nunito',Helvetica] font-extrabold text-black text-[24px] sm:text-[28px] md:text-[32px] tracking-[0.40px] leading-4 mb-4 sm:mb-8 md:mb-10 px-1 sm:px-0">
-          Trending ads
+          Recommended Products
         </h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4 md:gap-5 lg:gap-5 mb-14 sm:mb-0 auto-rows-auto justify-items-center">
