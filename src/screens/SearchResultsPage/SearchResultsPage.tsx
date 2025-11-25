@@ -244,8 +244,8 @@ export const SearchResultsPage = (): JSX.Element => {
   );
 
   return (
-    <div className="bg-white min-h-screen">
-      <div className="bg-white overflow-hidden w-full flex flex-col">
+    <div className="bg-[#efefef] min-h-screen">
+      <div className="overflow-hidden w-full flex flex-col">
         <GetAppSection
           onDownloadClick={() => setShowDownloadPopup(true)}
           onWaitlistClick={() => setShowWaitlistPopup(true)}
@@ -280,7 +280,7 @@ export const SearchResultsPage = (): JSX.Element => {
                   <div className="relative" ref={sortDropdownRef}>
                     <button
                       type="button"
-                      className="inline-flex items-center gap-0 rounded-full border border-[#fe2188] bg-white px-3 py-2 text-sm [font-family:'Nunito',Helvetica] text-[#fe2188] font-semibold text-base shadow-sm hover:bg-[#fe2188]/10 transition-colors"
+                      className="inline-flex items-center gap-0 rounded-full border border-[#fe2188] px-3 py-2 text-sm [font-family:'Nunito',Helvetica] text-[#fe2188] font-semibold text-base shadow-sm hover:bg-[#fe2188]/10 transition-colors"
                       onClick={() => setIsSortMenuOpen((prev) => !prev)}
                     >
                       <span>Sort</span>
@@ -358,26 +358,26 @@ export const SearchResultsPage = (): JSX.Element => {
               {mockProducts.map((product) => (
                 <Card
                   key={product.id}
-                  className="bg-white rounded-[15px] border border-[#e0e0e0] shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                  className="bg-[#fffdfd] rounded-[15px] border-0 shadow-none overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-full max-w-[260px]"
                   onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <CardContent className="p-0">
                     <div className="relative w-full aspect-[4/3]">
                       <img
-                        className="w-full h-full object-cover rounded-t-[15px]"
+                        className="w-full h-full object-cover"
                         alt="Product"
                         src={product.image}
                       />
                     </div>
-                    <div className="p-4">
-                      <p className="[font-family:'Nunito',Helvetica] font-normal text-[#313131] text-sm tracking-[0] leading-5 mb-2 line-clamp-2">
+                    <div className="p-3">
+                      <p className="[font-family:'Nunito',Helvetica] font-medium text-[#313131] text-xs tracking-[0] leading-4 mb-2 line-clamp-2">
                         {product.description}
                       </p>
-                      <p className="[font-family:'Nunito',Helvetica] font-extrabold text-[#120b0b] text-lg tracking-[0] leading-5 mb-2">
+                      <p className="[font-family:'Nunito',Helvetica] font-extrabold text-[#120b0b] text-base tracking-[0] leading-4 mb-2">
                         {product.price}
                       </p>
-                      <p className="[font-family:'Nunito',Helvetica] font-normal text-[#313131] text-xs tracking-[0] leading-4">
-                        {product.location} • {product.condition}
+                      <p className="[font-family:'Nunito',Helvetica] font-medium text-[#313131] text-[11px] tracking-[0] leading-4">
+                        {product.location}
                       </p>
                     </div>
                   </CardContent>

@@ -119,109 +119,109 @@ export const SellerShopPage = (): JSX.Element => {
       />
       <WaitlistPopup isOpen={showWaitlistPopup} onClose={() => setShowWaitlistPopup(false)} />
 
-      <div className="max-w-[1440px] mx-auto px-8 py-8">
-        <div className="grid grid-cols-[280px_1fr] gap-8">
+      <div className="max-w-[1440px] mx-auto px-0 sm:px-8 py-0 sm:py-8">
+        <div className="flex flex-col gap-4 sm:gap-8 lg:grid lg:grid-cols-[280px_1fr]">
           <aside className="space-y-6">
-  <Card className="bg-white border-0 shadow-sm rounded-[24px] p-0 overflow-hidden">
-    <div className="relative">
-      {/* Banner Image */}
-      <div className="w-full h-[150px] bg-gradient-to-b from-[#e8e8e8] to-[#f5f5f5] relative overflow-hidden">
-        <img
-          src="https://tse2.mm.bing.net/th/id/OIP.U5nFcRcUdPctXJs_3ft2KQHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
-          alt="Shop"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/20"></div>
-      </div>
+            <Card className="bg-white border-0 shadow-sm rounded-none sm:rounded-[24px] p-0 overflow-hidden">
+              <div className="relative">
+                {/* Banner Image */}
+                <div className="w-full h-56 bg-gradient-to-b from-[#e8e8e8] to-[#f5f5f5] relative overflow-hidden">
+                  <img
+                    src="https://tse2.mm.bing.net/th/id/OIP.U5nFcRcUdPctXJs_3ft2KQHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Shop"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/20"></div>
+                </div>
 
-      <div className="px-6 pb-6">
-        <div className="flex flex-col items-center -mt-16 mb-4">
-          <div className="w-[120px] h-[120px] bg-[#1E88E5] rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-lg relative z-10">
-            <img
-              src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200"
-              alt="Seller"
-              className="w-full h-full object-cover rounded-full"
-            />
-          </div>
-          
-          <h2 className="[font-family:'Nunito',Helvetica] font-bold text-[#120b0b] text-2xl tracking-[0] leading-[normal] text-center mb-1">
-            Abebe Kebede Shop
-          </h2>
-          <p className="[font-family:'Nunito',Helvetica] font-normal text-[#757575] text-sm tracking-[0] leading-[normal] text-center mb-1">
-            Last seen: 1 week ago
-          </p>
-          <p className="[font-family:'Nunito',Helvetica] font-normal text-[#757575] text-sm tracking-[0] leading-[normal] text-center">
-            26 days in Nisr Market
-          </p>
-        </div>
+                <div className="px-6 pb-6">
+                  <div className="flex flex-col items-left -mt-16 mb-4">
+                    <div className="w-[120px] h-[120px] bg-[#1E88E5] rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-lg relative z-10">
+                      <img
+                        src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200"
+                        alt="Seller"
+                        className="w-full h-full object-cover rounded-full"
+                      />
+                    </div>
+                    
+                    <h2 className="[font-family:'Nunito',Helvetica] font-bold text-[#120b0b] text-2xl tracking-[0] leading-[normal] text-left mb-1">
+                      Abebe Kebede Shop
+                    </h2>
+                    <p className="[font-family:'Nunito',Helvetica] font-normal text-[#757575] text-sm tracking-[0] leading-[normal] text-left mb-1">
+                      Last seen: 1 week ago
+                    </p>
+                    <p className="[font-family:'Nunito',Helvetica] font-normal text-[#757575] text-sm tracking-[0] leading-[normal] text-left">
+                      26 days in Nisr Market
+                    </p>
+                  </div>
 
-        <div className="space-y-3 pt-2">
-          <Button 
-            className="w-full h-14 bg-white border-3 border-[#FF5252] hover:bg-[#FFF3E0] rounded-[16px] [font-family:'Nunito',Helvetica] font-bold text-[#FF5252] text-lg tracking-[0] leading-[normal] transition-colors"
-            onClick={() => setShowDownloadPopup(true)}
-          >
-            Call
-          </Button>
+                  <div className="space-y-3 pt-2 flex flex-col items-center">
+                    <Button 
+                      className="w-full h-14 max-w-100 bg-[#FFC4D5] border-3 border-[#FF5252] hover:bg-[#FFF3E0] rounded-[16px] [font-family:'Nunito',Helvetica] font-bold text-[#FF5252] text-lg tracking-[0] leading-[normal] transition-colors"
+                      onClick={() => setShowDownloadPopup(true)}
+                    >
+                      Call
+                    </Button>
 
-          <Button
-            variant="outline"
-            className="w-full h-14 bg-[#E8E8E8] border-0 hover:bg-[#D8D8D8] rounded-[16px] [font-family:'Nunito',Helvetica] font-semibold text-[#120b0b] text-base tracking-[0] leading-[normal] flex items-center justify-center gap-2 transition-colors"
-            onClick={() => setShowDownloadPopup(true)}
-          >
-            <span>Feedback</span>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9 6L15 12L9 18"
-                stroke="#120b0b"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </Button>
-        </div>
-      </div>
-    </div>
-  </Card>
-</aside>
+                    <Button
+                      variant="outline"
+                      className="w-full h-14 max-w-100 bg-[#E4E4E4] border-0 hover:bg-[#D8D8D8] rounded-[16px] [font-family:'Nunito',Helvetica] font-bold text-[#120b0b] text-base tracking-[0] leading-[normal] gap-2 transition-colors"
+                      onClick={() => setShowDownloadPopup(true)}
+                    >
+                      <span>Feedback</span>
+                      <span className="w-full"></span>
+                      <svg
+                        style={{ width: '36px', height: '36px' }}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9 6L15 12L9 18"
+                          stroke="#120b0b"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </aside>
 
           <main>
-            <div className="mb-4">
-              <h1 className="[font-family:'Nunito',Helvetica] font-bold text-black text-3xl tracking-[0] leading-[normal]">
+            <div className="mb-2 sm:mb-4">
+              <h1 className="[font-family:'Nunito',Helvetica] font-extrabold text-black text-[24px] sm:text-[28px] md:text-[32px] tracking-[0.40px] leading-4 mb-4 sm:mb-8 md:mb-10 px-1 sm:px-0">
                 All items
               </h1>
             </div>
 
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-3 px-2 sm:px-0">
               {shopProducts.map((product) => (
-                <Card
+                 <Card
                   key={product.id}
-                  className="bg-white rounded-[15px] border border-[#e0e0e0] shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                  className="bg-[#fffdfd] rounded-[15px] border-0 shadow-none overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-full max-w-[260px]"
                   onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <CardContent className="p-0">
                     <div className="relative w-full aspect-[4/3]">
                       <img
-                        className="w-full h-full object-cover rounded-t-[15px]"
+                        className="w-full h-full object-cover"
                         alt="Product"
                         src={product.image}
                       />
                     </div>
-                    <div className="p-4">
-                      <p className="[font-family:'Nunito',Helvetica] font-normal text-[#313131] text-sm tracking-[0] leading-5 mb-2 line-clamp-2">
+                    <div className="p-3">
+                      <p className="[font-family:'Nunito',Helvetica] font-medium text-[#313131] text-xs tracking-[0] leading-4 mb-2 line-clamp-2">
                         {product.description}
                       </p>
-                      <p className="[font-family:'Nunito',Helvetica] font-extrabold text-[#120b0b] text-lg tracking-[0] leading-5 mb-2">
+                      <p className="[font-family:'Nunito',Helvetica] font-extrabold text-[#120b0b] text-base tracking-[0] leading-4 mb-2">
                         {product.price}
                       </p>
-                      <p className="[font-family:'Nunito',Helvetica] font-normal text-[#313131] text-xs tracking-[0] leading-4">
-                        {product.location} • {product.condition}
+                      <p className="[font-family:'Nunito',Helvetica] font-medium text-[#313131] text-[11px] tracking-[0] leading-4">
+                        {product.location}
                       </p>
                     </div>
                   </CardContent>
