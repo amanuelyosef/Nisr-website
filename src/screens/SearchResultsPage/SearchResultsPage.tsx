@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card, CardContent } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
@@ -8,7 +8,7 @@ import AppDownloadPopup from "../../components/ui/AppDownloadPopup";
 import WaitlistPopup from "../../components/ui/WaitlistPopup";
 import { searchProducts } from "../../lib/algolia";
 
-export const SearchResultsPage = (): JSX.Element => {
+export const SearchResultsPage = (): React.ReactElement => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
@@ -335,7 +335,18 @@ export const SearchResultsPage = (): JSX.Element => {
 
               {queryResults.map((product: any) => {
                 // Normalize Algolia hit fields to our UI expectations
-                const id = product.id;
+                // The record identifier comes from the document name in our index.
+                // Try common document-name fields first, then fall back to other ids.
+                const id =
+                  product.documentName ??
+                  product.document_name ??
+                  product._documentName ??
+                  product._doc ??
+                  product._id ??
+                  product.objectID ??
+                  product.objectId ??
+                  product.id ??
+                  product.name;
                 const name = product.name ?? "Product";
                 const price = product.price ?? "0";
                 const baseDescription = product.desc ?? "";

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "../card";
 import { doc, getDoc } from "firebase/firestore";
@@ -22,7 +22,7 @@ export interface RecommendedProductsSectionProps {
 
 export const RecommendedProductsSection = ({
   title,
-}: RecommendedProductsSectionProps): JSX.Element => {
+}: RecommendedProductsSectionProps): React.ReactElement => {
   const navigate = useNavigate();
   const heading = title ?? "Trending";
   const [products, setProducts] = useState<pageData | null>(null);
