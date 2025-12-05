@@ -17,7 +17,7 @@ type ProductsList = {
 };
 
 
-export const TrendProductsSection = (): JSX.Element => {
+export const TrendProductsSection = (): React.ReactElement => {
   const navigate = useNavigate();
   const [techProducts, setTechProducts] = useState<ProductsList | null>(null);
   const [fashionProducts, setFashionProducts] = useState<ProductsList | null>(null);
@@ -68,7 +68,7 @@ export const TrendProductsSection = (): JSX.Element => {
                     />
                     <div className="p-2">
                       <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[16px] sm:text-[18px] tracking-[0] leading-4">
-                        {product.price} ETB
+                        ETB {product.price}
                       </span>
                     </div>
                   </CardContent>
@@ -102,7 +102,7 @@ export const TrendProductsSection = (): JSX.Element => {
                       />
                       <div className="p-2">
                         <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[16px] sm:text-[18px] tracking-[0] leading-4">
-                          {product.price} ETB
+                          ETB {product.price}
                         </span>
                       </div>
                     </CardContent>
@@ -135,7 +135,7 @@ export const TrendProductsSection = (): JSX.Element => {
                       />
                       <div className="p-2">
                         <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[16px] sm:text-[18px] tracking-[0] leading-4">
-                          {product.price} ETB
+                          ETB {product.price}
                         </span>
                       </div>
                     </CardContent>

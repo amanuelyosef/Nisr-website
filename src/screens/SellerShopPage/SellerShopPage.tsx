@@ -94,7 +94,7 @@ const shopProducts = [
   },
 ];
 
-export const SellerShopPage = (): JSX.Element => {
+export const SellerShopPage = (): React.ReactElement => {
   const navigate = useNavigate();
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
   const [showWaitlistPopup, setShowWaitlistPopup] = useState(false);

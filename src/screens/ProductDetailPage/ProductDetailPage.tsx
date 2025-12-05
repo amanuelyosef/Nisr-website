@@ -35,7 +35,7 @@ type ProductData = {
   views: number;
 };
 
-export const ProductDetailPage = (): JSX.Element => {
+export const ProductDetailPage = (): React.ReactElement => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
