@@ -7,19 +7,32 @@ import { TopAppBarSection } from "../../components/ui/TopAppBarSection";
 import AppDownloadPopup from "../../components/ui/AppDownloadPopup";
 import WaitlistPopup from "../../components/ui/WaitlistPopup";
 import { searchProducts } from "../../lib/algolia";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 export const SearchResultsPage = (): React.ReactElement => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
   const [showWaitlistPopup, setShowWaitlistPopup] = useState(false);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [appliedPriceFilter, setAppliedPriceFilter] = useState<string | null>(null);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
   const [selectedDelivery, setSelectedDelivery] = useState<string[]>([]);
+  const [availableCategories, setAvailableCategories] = useState<string[]>([]);
+  const [categoryMap, setCategoryMap] = useState<Record<string, { id: string; name: string; img?: string }>>({});
+  const minInputRef = useRef<HTMLInputElement | null>(null);
+  const maxInputRef = useRef<HTMLInputElement | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const sortOptions = ["Most viewed", "Newest", "Lowest price", "Highest price"];
+  const sortIndexMap: Record<string, string | undefined> = {
+    "Most viewed": undefined, // default index
+    "Newest": "search product posted date descending",
+    "Lowest price": "search product price ascending",
+    "Highest price": "search product price descending",
+  };
   const [sortOption, setSortOption] = useState(sortOptions[0]);
   const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
   const sortDropdownRef = useRef<HTMLDivElement | null>(null);
@@ -27,10 +40,84 @@ export const SearchResultsPage = (): React.ReactElement => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const searchQuery = (searchParams.get("q") ?? "").trim();
+  const initializedFromParams = useRef(false);
+
+  const syncSearchParams = (updates: Record<string, string | null>) => {
+    const params = new URLSearchParams(searchParams);
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null || value === "") {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
+    });
+    setSearchParams(params);
+  };
+
+  const buildPriceFilter = (min: string, max: string) => {
+    const minTrim = min.trim();
+    const maxTrim = max.trim();
+    if (minTrim && maxTrim) return `price >= ${minTrim} AND price <= ${maxTrim}`;
+    if (minTrim) return `price >= ${minTrim}`;
+    if (maxTrim) return `price <= ${maxTrim}`;
+    return "";
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   });
+
+  // Initialize filters from URL parameters once (for back-navigation persistence)
+  useEffect(() => {
+    if (initializedFromParams.current) return;
+    initializedFromParams.current = true;
+
+    const initCategory = searchParams.get("category");
+    const initConditionRaw = searchParams.get("condition");
+    const initCondition = initConditionRaw === "Brand New" ? "New" : initConditionRaw; // backwards-compat mapping
+    const initDelivery = searchParams.get("delivery");
+    const initMin = searchParams.get("min") ?? "";
+    const initMax = searchParams.get("max") ?? "";
+
+    if (initCategory) setSelectedCategories([initCategory]);
+    if (initCondition) setSelectedConditions([initCondition]);
+    if (initDelivery) setSelectedDelivery([initDelivery]);
+    if (initMin) setMinPrice(initMin);
+    if (initMax) setMaxPrice(initMax);
+
+    const initialPriceFilter = buildPriceFilter(initMin, initMax);
+    if (initialPriceFilter) setAppliedPriceFilter(initialPriceFilter);
+  }, [searchParams]);
+
+  const buildFilters = () => {
+    const parts: string[] = [];
+
+    if (selectedCategories[0]) {
+      parts.push(`categoryId:${selectedCategories[0]}`);
+    }
+
+    if (selectedConditions[0]) {
+      const conditionValue = selectedConditions[0];
+      parts.push(`condition:${conditionValue}`);
+    }
+
+    if (selectedDelivery[0]) {
+      const delivery = selectedDelivery[0];
+      if (delivery === "Free Delivery") {
+        parts.push("freeDelivery:true");
+      } else if (delivery === "Paid Delivery") {
+        parts.push("freeDelivery:false");
+      } else if (delivery === "No Delivery") {
+        parts.push("freeDelivery:null");
+      }
+    }
+
+    if (appliedPriceFilter) {
+      parts.push(appliedPriceFilter);
+    }
+
+    return parts.join(" AND ");
+  };
 
   useEffect(() => {
     const runSearch = async () => {
@@ -41,7 +128,15 @@ export const SearchResultsPage = (): React.ReactElement => {
       setIsLoading(true);
       setError(null);
       try {
-        const res = await searchProducts(searchQuery, { hitsPerPage: 40 });
+        const filters = buildFilters();
+        const options: Record<string, any> = { hitsPerPage: 40 };
+        if (filters) options.filters = filters;
+
+        const res = await searchProducts(
+          searchQuery,
+          options,
+          sortIndexMap[sortOption]
+        );
         setQueryResults(res.hits ?? []);
       } catch (err: any) {
         setError(err?.message ?? "Search failed");
@@ -52,7 +147,42 @@ export const SearchResultsPage = (): React.ReactElement => {
     };
 
     runSearch();
-  }, [searchQuery]);
+  }, [searchQuery, sortOption, selectedCategories, selectedConditions, selectedDelivery, appliedPriceFilter]);
+
+  // Collect unique categoryIds from the latest search hits
+  useEffect(() => {
+    const ids = new Set<string>();
+    queryResults.forEach((hit: any) => {
+      const cid = hit.categoryId ?? hit.category_id ?? hit.category;
+      if (typeof cid === "string" && cid.trim()) ids.add(cid.trim());
+    });
+    setAvailableCategories(Array.from(ids));
+  }, [queryResults]);
+
+  // Fetch category metadata map once and keep it in memory
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const ref = doc(db, "categories", "category_list");
+        const snap = await getDoc(ref);
+        if (!snap.exists()) return;
+        const data = snap.data();
+        const list: any[] = (data?.list as any[]) || [];
+        const map: Record<string, { id: string; name: string; img?: string }> = {};
+        list.forEach((item) => {
+          if (item?.id) {
+            map[item.id] = { id: item.id, name: item.name ?? item.id, img: item.img };
+          }
+        });
+        setCategoryMap(map);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error("Failed to fetch category list", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     if (!isSortMenuOpen) return;
@@ -68,19 +198,23 @@ export const SearchResultsPage = (): React.ReactElement => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isSortMenuOpen]);
 
-  const categories = ["Electronics", "Fashion", "Foods and Drinks", "Stationary"];
-  const conditions = ["Brand New", "Used", "Repacked"];
+  const conditions = [
+    { label: "Brand New", value: "New" },
+    { label: "Used", value: "Used" },
+    { label: "Repacked", value: "Repacked" },
+  ];
   const deliveryOptions = ["Free Delivery", "Paid Delivery", "No Delivery"];
 
-  const toggleFilter = (
+  // Single-select toggle: select the value, or deselect if already selected
+  const toggleSingle = (
     value: string,
     selected: string[],
     setter: (value: string[]) => void
   ) => {
-    if (selected.includes(value)) {
-      setter(selected.filter((item) => item !== value));
+    if (selected.length === 1 && selected[0] === value) {
+      setter([]);
     } else {
-      setter([...selected, value]);
+      setter([value]);
     }
   };
 
@@ -92,54 +226,120 @@ export const SearchResultsPage = (): React.ReactElement => {
             Category Filters
           </h3>
           <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() =>
-                  toggleFilter(
-                    category,
-                    selectedCategories,
-                    setSelectedCategories
-                  )
-                }
-                className={`px-4 py-2 rounded-[50px] border [font-family:'Nunito',Helvetica] font-medium text-sm tracking-[0] leading-[normal] transition-colors ${
-                  selectedCategories.includes(category)
-                    ? "bg-[#fe2188] text-white border-[#fe2188]"
-                    : "bg-[#f5f5f5] text-[#313131] border-[#e0e0e0] hover:border-[#fe2188]"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+            {availableCategories.map((categoryId) => {
+              const category = categoryMap[categoryId];
+              const label = category?.name ?? categoryId;
+              return (
+                <button
+                  key={categoryId}
+                  onClick={() => {
+                    const next = selectedCategories[0] === categoryId ? [] : [categoryId];
+                    setSelectedCategories(next);
+                    syncSearchParams({
+                      q: searchQuery,
+                      category: next[0] ?? null,
+                      condition: selectedConditions[0] ?? null,
+                      delivery: selectedDelivery[0] ?? null,
+                      min: minPrice || null,
+                      max: maxPrice || null,
+                    });
+                  }}
+                  className={`px-4 py-2 rounded-[50px] border [font-family:'Nunito',Helvetica] font-medium text-sm tracking-[0] leading-[normal] transition-colors ${
+                    selectedCategories.includes(categoryId)
+                      ? "bg-[#fe2188] text-white border-[#fe2188]"
+                      : "bg-[#f5f5f5] text-[#313131] border-[#e0e0e0] hover:border-[#fe2188]"
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
           </div>
         </CardContent>
       </Card>
 
       <Card className="bg-white rounded-[15px] border border-[#e0e0e0] shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-        <CardContent className="p-4">
-          <h3 className="[font-family:'Nunito',Helvetica] font-bold text-black text-xl tracking-[0] leading-[normal] mb-4">
-            Price Filter
-          </h3>
-          <div className="flex items-center gap-3">
-            <Input
-              type="text"
-              placeholder="min"
-              value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
-              className="h-10 bg-[#f5f5f5] border-[#e0e0e0] rounded-md [font-family:'Nunito',Helvetica] font-normal text-[#313131] text-sm"
-            />
-            <span className="[font-family:'Nunito',Helvetica] font-normal text-[#313131] text-lg">
-              —
-            </span>
-            <Input
-              type="text"
-              placeholder="max"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
-              className="h-10 bg-[#f5f5f5] border-[#e0e0e0] rounded-md [font-family:'Nunito',Helvetica] font-normal text-[#313131] text-sm"
-            />
-          </div>
-        </CardContent>
+              <CardContent className="p-4">
+                <h3 className="[font-family:'Nunito',Helvetica] font-bold text-black text-xl tracking-[0] leading-[normal] mb-4">
+                  Price Filter
+                </h3>
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3">
+                    <Input
+                      type="text"
+                      placeholder="min"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      ref={minInputRef}
+                      value={minPrice}
+                      onChange={(e) => setMinPrice(e.target.value.replace(/[^0-9]/g, ""))}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          maxInputRef.current?.focus();
+                        }
+                      }}
+                      className="h-10 bg-[#f5f5f5] border-[#e0e0e0] rounded-md [font-family:'Nunito',Helvetica] font-normal text-[#313131] text-sm"
+                    />
+                    <span className="[font-family:'Nunito',Helvetica] font-normal text-[#313131] text-lg">
+                      —
+                    </span>
+                    <Input
+                      type="text"
+                      placeholder="max"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      ref={maxInputRef}
+                      value={maxPrice}
+                      onChange={(e) => setMaxPrice(e.target.value.replace(/[^0-9]/g, ""))}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          const min = minPrice.trim();
+                          const max = maxPrice.trim();
+                          const filterStr = buildPriceFilter(min, max);
+                          setMinPrice(min);
+                          setMaxPrice(max);
+                          setAppliedPriceFilter(filterStr || null);
+                          syncSearchParams({
+                            q: searchQuery,
+                            category: selectedCategories[0] ?? null,
+                            condition: selectedConditions[0] ?? null,
+                            delivery: selectedDelivery[0] ?? null,
+                            min: min || null,
+                            max: max || null,
+                          });
+                        }
+                      }}
+                      className="h-10 bg-[#f5f5f5] border-[#e0e0e0] rounded-md [font-family:'Nunito',Helvetica] font-normal text-[#313131] text-sm"
+                    />
+                  </div>
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-2 rounded-[10px] bg-[#fe2188] text-white px-3 py-2 text-sm font-semibold hover:bg-[#ff3a9d] transition-colors"
+                      onClick={() => {
+                        const min = minPrice.trim();
+                        const max = maxPrice.trim();
+                        const filterStr = buildPriceFilter(min, max);
+                        setMinPrice(min);
+                        setMaxPrice(max);
+                        setAppliedPriceFilter(filterStr || null);
+                        syncSearchParams({
+                          q: searchQuery,
+                          category: selectedCategories[0] ?? null,
+                          condition: selectedConditions[0] ?? null,
+                          delivery: selectedDelivery[0] ?? null,
+                          min: min || null,
+                          max: max || null,
+                        });
+                      }}
+                    >
+                      Apply
+                    </button>
+                  </div>
+                </div>
+              </CardContent>
       </Card>
 
       <Card className="bg-white rounded-[15px] border border-[#e0e0e0] shadow-sm hover:shadow-md transition-shadow cursor-pointer">
@@ -150,23 +350,41 @@ export const SearchResultsPage = (): React.ReactElement => {
           <div className="space-y-2">
             {conditions.map((condition) => (
               <label
-                key={condition}
+                key={condition.value}
                 className="flex items-center gap-2 cursor-pointer"
               >
                 <input
-                  type="checkbox"
-                  checked={selectedConditions.includes(condition)}
-                  onChange={() =>
-                    toggleFilter(
-                      condition,
-                      selectedConditions,
-                      setSelectedConditions
-                    )
-                  }
+                  type="radio"
+                  name="condition"
+                  checked={selectedConditions.includes(condition.value)}
+                  onClick={() => {
+                    const next = selectedConditions[0] === condition.value ? [] : [condition.value];
+                    setSelectedConditions(next);
+                    syncSearchParams({
+                      q: searchQuery,
+                      category: selectedCategories[0] ?? null,
+                      condition: next[0] ?? null,
+                      delivery: selectedDelivery[0] ?? null,
+                      min: minPrice || null,
+                      max: maxPrice || null,
+                    });
+                  }}
+                  onChange={() => {
+                    const next = selectedConditions[0] === condition.value ? [] : [condition.value];
+                    setSelectedConditions(next);
+                    syncSearchParams({
+                      q: searchQuery,
+                      category: selectedCategories[0] ?? null,
+                      condition: next[0] ?? null,
+                      delivery: selectedDelivery[0] ?? null,
+                      min: minPrice || null,
+                      max: maxPrice || null,
+                    });
+                  }}
                   className="w-4 h-4 rounded border-[#e0e0e0] text-[#fe2188] focus:ring-[#fe2188]"
                 />
                 <span className="[font-family:'Nunito',Helvetica] font-normal text-[#313131] text-base tracking-[0] leading-[normal]">
-                  {condition}
+                  {condition.label}
                 </span>
               </label>
             ))}
@@ -186,11 +404,33 @@ export const SearchResultsPage = (): React.ReactElement => {
                 className="flex items-center gap-2 cursor-pointer"
               >
                 <input
-                  type="checkbox"
+                  type="radio"
+                  name="delivery"
                   checked={selectedDelivery.includes(option)}
-                  onChange={() =>
-                    toggleFilter(option, selectedDelivery, setSelectedDelivery)
-                  }
+                  onClick={() => {
+                    const next = selectedDelivery[0] === option ? [] : [option];
+                    setSelectedDelivery(next);
+                    syncSearchParams({
+                      q: searchQuery,
+                      category: selectedCategories[0] ?? null,
+                      condition: selectedConditions[0] ?? null,
+                      delivery: next[0] ?? null,
+                      min: minPrice || null,
+                      max: maxPrice || null,
+                    });
+                  }}
+                  onChange={() => {
+                    const next = selectedDelivery[0] === option ? [] : [option];
+                    setSelectedDelivery(next);
+                    syncSearchParams({
+                      q: searchQuery,
+                      category: selectedCategories[0] ?? null,
+                      condition: selectedConditions[0] ?? null,
+                      delivery: next[0] ?? null,
+                      min: minPrice || null,
+                      max: maxPrice || null,
+                    });
+                  }}
                   className="w-4 h-4 rounded border-[#e0e0e0] text-[#fe2188] focus:ring-[#fe2188]"
                 />
                 <span className="[font-family:'Nunito',Helvetica] font-normal text-[#313131] text-base tracking-[0] leading-[normal]">

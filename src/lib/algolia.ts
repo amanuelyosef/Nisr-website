@@ -24,15 +24,21 @@ if (ALGOLIA_APP_ID && ALGOLIA_API_KEY) {
 
 export { algoliaClient, productsIndex };
 
-export async function searchProducts(query: string, options: Record<string, any> = {}) {
-  if (!algoliaClient || !ALGOLIA_INDEX) {
+export async function searchProducts(
+  query: string,
+  options: Record<string, any> = {},
+  indexOverride?: string
+) {
+  const indexName = indexOverride || ALGOLIA_INDEX;
+
+  if (!algoliaClient || !indexName) {
     return { hits: [], nbHits: 0 };
   }
 
   try {
     const response = await algoliaClient.search([
       {
-        indexName: ALGOLIA_INDEX,
+        indexName,
         params: { query, ...options },
       },
     ]);
