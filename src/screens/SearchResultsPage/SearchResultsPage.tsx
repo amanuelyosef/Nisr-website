@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card, CardContent } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
@@ -9,6 +9,57 @@ import WaitlistPopup from "../../components/ui/WaitlistPopup";
 import { searchProducts } from "../../lib/algolia";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+
+type ProductImageProps = {
+  src: string;
+  alt: string;
+};
+
+const ProductImage = ({ src, alt }: ProductImageProps): React.ReactElement => {
+  const [loading, setLoading] = useState(true);
+  const [errored, setErrored] = useState(false);
+
+  return (
+    <div className="relative w-full aspect-[4/3] bg-[#f8f8f8] overflow-hidden flex items-center justify-center">
+      {!errored && (
+        <img
+          className={`w-full h-full object-cover transition-opacity duration-300 ${loading ? "opacity-0" : "opacity-100"}`}
+          alt={alt}
+          src={src}
+          loading="lazy"
+          onLoad={() => setLoading(false)}
+          onError={() => {
+            setErrored(true);
+            setLoading(false);
+          }}
+        />
+      )}
+
+      {loading && !errored && (
+        <div className="absolute inset-0 bg-[#e6e6e6]" />
+      )}
+
+      {errored && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#f8f8f8] text-[#b0b0b0]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            className="h-10 w-10"
+          >
+            <path d="M4 5.5A1.5 1.5 0 015.5 4h13a1.5 1.5 0 011.5 1.5v11a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 16.5v-11z" />
+            <path d="M4 15l3.5-3.5a1 1 0 011.414 0L14 17" />
+            <path d="M12.5 14.5L15 12l3 3" />
+            <circle cx="9" cy="8.5" r="1" />
+          </svg>
+          <span className="mt-2 text-xs [font-family:'Nunito',Helvetica]">Image unavailable</span>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const SearchResultsPage = (): React.ReactElement => {
   const navigate = useNavigate();
@@ -23,6 +74,7 @@ export const SearchResultsPage = (): React.ReactElement => {
   const [selectedDelivery, setSelectedDelivery] = useState<string[]>([]);
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [categoryMap, setCategoryMap] = useState<Record<string, { id: string; name: string; img?: string }>>({});
+  const [categoryMapLoaded, setCategoryMapLoaded] = useState(false);
   const minInputRef = useRef<HTMLInputElement | null>(null);
   const maxInputRef = useRef<HTMLInputElement | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -38,9 +90,15 @@ export const SearchResultsPage = (): React.ReactElement => {
   const sortDropdownRef = useRef<HTMLDivElement | null>(null);
   const [queryResults, setQueryResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(0);
+  const [nbPages, setNbPages] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
   const searchQuery = (searchParams.get("q") ?? "").trim();
   const initializedFromParams = useRef(false);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const searchKeyRef = useRef<string>("");
 
   const syncSearchParams = (updates: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams);
@@ -119,17 +177,36 @@ export const SearchResultsPage = (): React.ReactElement => {
     return parts.join(" AND ");
   };
 
+  const searchKey = [
+    searchQuery,
+    sortOption,
+    selectedCategories.join(","),
+    selectedConditions.join(","),
+    selectedDelivery.join(","),
+    appliedPriceFilter ?? "",
+  ].join("|");
+
   useEffect(() => {
-    const runSearch = async () => {
-      if (!searchQuery) {
-        setQueryResults([]);
-        return;
-      }
+    searchKeyRef.current = searchKey;
+
+    if (!searchQuery) {
+      setQueryResults([]);
+      setPage(0);
+      setNbPages(0);
+      setHasMore(false);
+      setIsLoading(false);
+      setIsLoadingMore(false);
+      return;
+    }
+
+    const fetchFirstPage = async () => {
       setIsLoading(true);
+      setIsLoadingMore(false);
       setError(null);
+
       try {
         const filters = buildFilters();
-        const options: Record<string, any> = { hitsPerPage: 40 };
+        const options: Record<string, any> = { hitsPerPage: 40, page: 0 };
         if (filters) options.filters = filters;
 
         const res = await searchProducts(
@@ -137,17 +214,97 @@ export const SearchResultsPage = (): React.ReactElement => {
           options,
           sortIndexMap[sortOption]
         );
+
+        if (searchKeyRef.current !== searchKey) return;
+
+        const returnedPage = res.page ?? 0;
+        const totalPages = res.nbPages ?? 0;
         setQueryResults(res.hits ?? []);
+        setPage(returnedPage);
+        setNbPages(totalPages);
+        setHasMore(returnedPage + 1 < totalPages);
       } catch (err: any) {
+        if (searchKeyRef.current !== searchKey) return;
         setError(err?.message ?? "Search failed");
         setQueryResults([]);
+        setPage(0);
+        setNbPages(0);
+        setHasMore(false);
       } finally {
-        setIsLoading(false);
+        if (searchKeyRef.current === searchKey) {
+          setIsLoading(false);
+          setIsLoadingMore(false);
+        }
       }
     };
 
-    runSearch();
-  }, [searchQuery, sortOption, selectedCategories, selectedConditions, selectedDelivery, appliedPriceFilter]);
+    setPage(0);
+    setNbPages(0);
+    setHasMore(false);
+    setQueryResults([]);
+    fetchFirstPage();
+  }, [searchKey, searchQuery, sortOption, selectedCategories, selectedConditions, selectedDelivery, appliedPriceFilter]);
+
+  const fetchNextPage = useCallback(async () => {
+    if (!searchQuery) return;
+    if (!hasMore) return;
+
+    const nextPage = page + 1;
+    const currentKey = searchKeyRef.current;
+
+    setIsLoadingMore(true);
+    setError(null);
+
+    try {
+      const filters = buildFilters();
+      const options: Record<string, any> = { hitsPerPage: 40, page: nextPage };
+      if (filters) options.filters = filters;
+
+      const res = await searchProducts(
+        searchQuery,
+        options,
+        sortIndexMap[sortOption]
+      );
+
+      if (searchKeyRef.current !== currentKey) return;
+
+      const returnedPage = res.page ?? nextPage;
+      const totalPages = res.nbPages ?? nbPages;
+      setQueryResults((prev) => [...prev, ...(res.hits ?? [])]);
+      setPage(returnedPage);
+      setNbPages(totalPages);
+      setHasMore(returnedPage + 1 < totalPages);
+    } catch (err: any) {
+      if (searchKeyRef.current !== currentKey) return;
+      setError(err?.message ?? "Search failed");
+    } finally {
+      if (searchKeyRef.current === currentKey) {
+        setIsLoadingMore(false);
+      }
+    }
+  }, [searchQuery, sortOption, selectedCategories, selectedConditions, selectedDelivery, appliedPriceFilter, hasMore, page, nbPages]);
+
+  useEffect(() => {
+    const sentinel = loadMoreRef.current;
+    if (!sentinel) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting && hasMore && !isLoading && !isLoadingMore) {
+          fetchNextPage();
+        }
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasMore, isLoading, isLoadingMore]);
 
   // Collect unique categoryIds from the latest search hits
   useEffect(() => {
@@ -165,7 +322,10 @@ export const SearchResultsPage = (): React.ReactElement => {
       try {
         const ref = doc(db, "categories", "category_list");
         const snap = await getDoc(ref);
-        if (!snap.exists()) return;
+        if (!snap.exists()) {
+          setCategoryMap({});
+          return;
+        }
         const data = snap.data();
         const list: any[] = (data?.list as any[]) || [];
         const map: Record<string, { id: string; name: string; img?: string }> = {};
@@ -178,6 +338,8 @@ export const SearchResultsPage = (): React.ReactElement => {
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error("Failed to fetch category list", err);
+      } finally {
+        setCategoryMapLoaded(true);
       }
     };
 
@@ -226,34 +388,48 @@ export const SearchResultsPage = (): React.ReactElement => {
             Category Filters
           </h3>
           <div className="flex flex-wrap gap-2">
-            {availableCategories.map((categoryId) => {
-              const category = categoryMap[categoryId];
-              const label = category?.name ?? categoryId;
-              return (
-                <button
-                  key={categoryId}
-                  onClick={() => {
-                    const next = selectedCategories[0] === categoryId ? [] : [categoryId];
-                    setSelectedCategories(next);
-                    syncSearchParams({
-                      q: searchQuery,
-                      category: next[0] ?? null,
-                      condition: selectedConditions[0] ?? null,
-                      delivery: selectedDelivery[0] ?? null,
-                      min: minPrice || null,
-                      max: maxPrice || null,
-                    });
-                  }}
-                  className={`px-4 py-2 rounded-[50px] border [font-family:'Nunito',Helvetica] font-medium text-sm tracking-[0] leading-[normal] transition-colors ${
-                    selectedCategories.includes(categoryId)
-                      ? "bg-[#fe2188] text-white border-[#fe2188]"
-                      : "bg-[#f5f5f5] text-[#313131] border-[#e0e0e0] hover:border-[#fe2188]"
-                  }`}
-                >
-                  {label}
-                </button>
-              );
-            })}
+            {!categoryMapLoaded ? (
+              // while category metadata is loading, show neutral skeleton pills (do not reveal raw IDs)
+              availableCategories.length > 0 ? (
+                availableCategories.map((cid) => (
+                  <span
+                    key={cid}
+                    className="px-4 py-2 rounded-[50px] bg-[#f3f3f3] h-9 w-24 animate-pulse"
+                  />
+                ))
+              ) : (
+                <div className="text-sm text-[#777]">Loading categories…</div>
+              )
+            ) : (
+              availableCategories.map((categoryId) => {
+                const category = categoryMap[categoryId];
+                const label = category?.name ?? categoryId;
+                return (
+                  <button
+                    key={categoryId}
+                    onClick={() => {
+                      const next = selectedCategories[0] === categoryId ? [] : [categoryId];
+                      setSelectedCategories(next);
+                      syncSearchParams({
+                        q: searchQuery,
+                        category: next[0] ?? null,
+                        condition: selectedConditions[0] ?? null,
+                        delivery: selectedDelivery[0] ?? null,
+                        min: minPrice || null,
+                        max: maxPrice || null,
+                      });
+                    }}
+                    className={`px-4 py-2 rounded-[50px] border [font-family:'Nunito',Helvetica] font-medium text-sm tracking-[0] leading-[normal] transition-colors ${
+                      selectedCategories.includes(categoryId)
+                        ? "bg-[#fe2188] text-white border-[#fe2188]"
+                        : "bg-[#f5f5f5] text-[#313131] border-[#e0e0e0] hover:border-[#fe2188]"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })
+            )}
           </div>
         </CardContent>
       </Card>
@@ -621,14 +797,7 @@ export const SearchResultsPage = (): React.ReactElement => {
                     onClick={() => id && navigate(`/product/${id}`)}
                   >
                     <CardContent className="p-0">
-                      <div className="relative w-full aspect-[4/3]">
-                        <img
-                          className="w-full h-full object-cover"
-                          alt={name}
-                          src={image}
-                          loading="lazy"
-                        />
-                      </div>
+                      <ProductImage src={image} alt={name} />
                       <div className="p-3">
                         <p className="[font-family:'Nunito',Helvetica] font-medium text-[#313131] text-xs tracking-[0] leading-4 mb-2 line-clamp-2">
                           {name}
@@ -645,6 +814,12 @@ export const SearchResultsPage = (): React.ReactElement => {
                 );
               })}
             </div>
+            <div ref={loadMoreRef} className="h-4 w-full" />
+            {isLoadingMore && !isLoading && (
+              <div className="text-center text-sm text-[#313131] [font-family:'Nunito',Helvetica] mb-8">
+                Loading more…
+              </div>
+            )}
           </main>
         </div>
       </div>

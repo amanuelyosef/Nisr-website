@@ -47,6 +47,8 @@ export async function searchProducts(
     return {
       hits: result?.hits ?? [],
       nbHits: result?.nbHits ?? 0,
+      page: result?.page ?? 0,
+      nbPages: result?.nbPages ?? 0,
     };
   } catch (error) {
     // eslint-disable-next-line no-console
