@@ -58,7 +58,7 @@ export const TrendProductsSection = (): React.ReactElement => {
               {techProducts?.list.slice(0, 6).map((product) => (
                 <Card
                   key={product.id}
-                  className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-40 sm:min-w-[180px] flex-shrink-0 lg:min-w-0"
+                  className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-44 sm:min-w-[180px] flex-shrink-0 lg:min-w-0"
                   onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <CardContent className="p-0">
@@ -93,7 +93,7 @@ export const TrendProductsSection = (): React.ReactElement => {
                 {fashionProducts?.list.slice(0, 3).map((product) => (
                   <Card
                     key={product.id}
-                    className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-40 sm:min-w-[180px] flex-shrink-0 lg:min-w-0"
+                    className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-44 sm:min-w-[180px] flex-shrink-0 lg:min-w-0"
                     onClick={() => navigate(`/product/${product.id}`)}
                   >
                     <CardContent className="p-0">
@@ -127,7 +127,7 @@ export const TrendProductsSection = (): React.ReactElement => {
                 {stationaryProducts?.list.slice(0, 3).map((product) => (
                   <Card
                     key={product.id}
-                    className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-40 sm:min-w-[180px] flex-shrink-0 lg:min-w-0"
+                    className="bg-white border-0 overflow-hidden cursor-pointer hover:shadow-md transition-shadow w-44 sm:min-w-[180px] flex-shrink-0 lg:min-w-0"
                     onClick={() => navigate(`/product/${product.id}`)}
                   >
                     <CardContent className="p-0">

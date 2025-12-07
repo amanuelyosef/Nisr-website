@@ -1,4 +1,7 @@
+import type React from "react";
 import { FormEvent, useState } from "react";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 interface WaitlistPopupProps {
   isOpen: boolean;
@@ -6,18 +9,43 @@ interface WaitlistPopupProps {
 }
 
 const brandColor = "#FE2188";
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const isValidEmail = (value: string): boolean => emailPattern.test(value);
 
-const WaitlistPopup = ({ isOpen, onClose }: WaitlistPopupProps): JSX.Element | null => {
+const WaitlistPopup = ({ isOpen, onClose }: WaitlistPopupProps): React.ReactElement | null => {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setTimeout(() => {
+    if (isSubmitting) return;
+
+    const trimmedEmail = email.trim();
+    if (!isValidEmail(trimmedEmail)) {
+      setSubmitError("Please enter a valid email address.");
+      return;
+    }
+
+    setSubmitError(null);
+    setIsSubmitting(true);
+
+    try {
+      const normalizedEmail = trimmedEmail.toLowerCase();
+      await setDoc(doc(db, "waitlist_emails", normalizedEmail), {
+        email: trimmedEmail,
+        createdAt: serverTimestamp(),
+      });
       setIsSubmitted(true);
-    }, 800);
+    } catch (error) {
+      console.error("Failed to save waitlist email", error);
+      setSubmitError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const resetForm = () => {
@@ -25,6 +53,8 @@ const WaitlistPopup = ({ isOpen, onClose }: WaitlistPopupProps): JSX.Element | n
     setTimeout(() => {
       setIsSubmitted(false);
       setEmail("");
+      setSubmitError(null);
+      setIsSubmitting(false);
     }, 300);
   };
 
@@ -96,12 +126,17 @@ const WaitlistPopup = ({ isOpen, onClose }: WaitlistPopupProps): JSX.Element | n
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 px-4 rounded-xl text-white font-bold text-base shadow-md hover:shadow-lg hover:opacity-90 transition-all active:scale-[0.98]"
+                  className="w-full py-3.5 px-4 rounded-xl text-white font-bold text-base shadow-md hover:shadow-lg hover:opacity-90 transition-all active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
                   style={{ backgroundColor: brandColor }}
+                  disabled={isSubmitting}
                 >
-                  Get Early Access
+                  {isSubmitting ? "Saving..." : "Get Early Access"}
                 </button>
               </form>
+
+              {submitError && (
+                <p className="mt-2 text-center text-sm text-red-600">{submitError}</p>
+              )}
 
               <p className="mt-4 text-center text-xs text-gray-400">
                 Join others waiting for launch.
@@ -123,7 +158,7 @@ const WaitlistPopup = ({ isOpen, onClose }: WaitlistPopupProps): JSX.Element | n
                 className="text-sm font-semibold hover:underline"
                 style={{ color: brandColor }}
               >
-                Close window
+                Close
               </button>
             </div>
           )}

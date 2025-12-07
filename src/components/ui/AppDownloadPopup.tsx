@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface AppDownloadPopupProps {
   isOpen: boolean;
@@ -7,9 +7,21 @@ interface AppDownloadPopupProps {
 }
 
 const brandColor = '#FE2188';
+const downloadUrl = 'https://shorturl.at/2cujp';
 
 const AppDownloadPopup: React.FC<AppDownloadPopupProps> = ({ isOpen, onClose, onWaitlistClick }) => {
   if (!isOpen) return null;
+
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownload = () => {
+    if (isDownloading) return;
+    setIsDownloading(true);
+    // Small delay so the UI can show the downloading state, then navigate in the same tab
+    setTimeout(() => {
+      window.location.href = downloadUrl;
+    }, 150);
+  };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
@@ -54,13 +66,18 @@ const AppDownloadPopup: React.FC<AppDownloadPopupProps> = ({ isOpen, onClose, on
             Experience the fastest <span className="font-bold" style={{ color: brandColor }}>P2P marketplace</span> with zero fees on your first sale!
           </p>
           <div className="flex flex-col w-full gap-3">
-            <button className="flex items-center justify-center w-full px-4 py-3 text-white rounded-xl hover:opacity-90 transition-opacity shadow-md" style={{ backgroundColor: brandColor }}>
+            <button
+              className="flex items-center justify-center w-full px-4 py-3 text-white rounded-xl hover:opacity-90 transition-opacity shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
+              style={{ backgroundColor: brandColor }}
+              onClick={handleDownload}
+              disabled={isDownloading}
+            >
               <svg className="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M7.125 2.25L8.575 4.775C9.6 4.3 10.75 4.025 12 4.025C13.25 4.025 14.4 4.3 15.425 4.775L16.875 2.25C17.05 1.95 17.45 1.85 17.75 2.025C18.05 2.2 18.15 2.6 17.975 2.9L16.475 5.5C18.7 6.725 20.2 9.05 20.45 11.75H3.55C3.8 9.05 5.3 6.725 7.525 5.5L6.025 2.9C5.85 2.6 5.95 2.2 6.25 2.025C6.55 1.85 6.95 1.95 7.125 2.25ZM5.25 13.5H18.75V20.25C18.75 21.5 17.75 22.5 16.5 22.5H7.5C6.25 22.5 5.25 21.5 5.25 20.25V13.5ZM8.25 9.25C8.25 9.8 8.7 10.25 9.25 10.25C9.8 10.25 10.25 9.8 10.25 9.25C10.25 8.7 9.8 8.25 9.25 8.25C8.7 8.25 8.25 8.7 8.25 9.25ZM14.75 10.25C15.3 10.25 15.75 9.8 15.75 9.25C15.75 8.7 15.3 8.25 14.75 8.25C14.2 8.25 13.75 8.7 13.75 9.25C13.75 9.8 14.2 10.25 14.75 10.25Z" />
                 </svg> 
                <div className="text-left">
                 <div className="text-[10px] leading-none">GET Nisr Market</div>
-                <div className="text-sm font-bold leading-tight">Download the App</div>
+                <div className="text-sm font-bold leading-tight">{isDownloading ? 'Preparing download...' : 'Download the App'}</div>
               </div>
             </button>
 
