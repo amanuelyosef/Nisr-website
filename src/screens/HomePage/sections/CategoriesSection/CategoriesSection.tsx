@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import displayElectronics from "../../../../assets/images/display-electronics-image.png";
 import displayFashion from "../../../../assets/images/display-fashion-image-1.png";
 import displayFurniture from "../../../../assets/images/display-furniture-image.png";
@@ -20,7 +21,8 @@ const topImages = [
   { src: displayFurniture, alt: "Display furniture", label: "Furniture" },
 ];
 
-export const CategoriesSection = (): JSX.Element => {
+export const CategoriesSection = (): React.ReactElement => {
+  const navigate = useNavigate();
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -116,7 +118,10 @@ export const CategoriesSection = (): JSX.Element => {
                       item={
                         "isToggle" in category
                           ? { ...category, onToggle: toggleHandler }
-                          : category
+                          : {
+                              ...category,
+                              onClick: () => navigate(`/search?q=${encodeURIComponent(category.id)}`),
+                            }
                       }
                     />
                   ))}

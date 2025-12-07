@@ -6,6 +6,7 @@ export type Category = {
   img: string;
   id: string;
   name: string;
+  onClick?: () => void;
 };
 
 export type ToggleItem = {
@@ -20,15 +21,15 @@ export const CategoryCard = ({
   item,
 }: {
   item: CategoryGridItem;
-}): JSX.Element => {
+}): React.ReactElement => {
   const isToggle = "isToggle" in item;
 
   const cardClasses =
     "bg-[#FAFEFF] rounded-none sm:rounded-[8px] border-0 shadow-none sm:shadow-sm hover:shadow-md transition-shadow cursor-pointer min-w-[90px] max-w-[110px] flex-shrink-0 lg:min-w-0 lg:max-w-[160px]";
 
   return (
-    <Card className={cardClasses}>
-      <CardContent className="p-1 flex flex-col items-center justify-center h-[90px] gap-1 sm:p-2 sm:h-[100px] md:h-[120px] sm:gap-2">
+    <Card className={cardClasses} onClick={isToggle ? undefined : item.onClick}>
+      <CardContent className="p-1 flex flex-col items-center justify-center h-[110px] gap-1 sm:p-2 sm:h-[120px] md:h-[140px] sm:gap-2">
         {isToggle ? (
           <button
             type="button"
@@ -50,7 +51,7 @@ export const CategoryCard = ({
                 categoryImageMap.find((cat) => cat.tag == item.img)?.location
               }
             />
-            <div className="[font-family:'Nunito',Helvetica] font-semibold text-[#151414] text-xs sm:text-sm tracking-[0] leading-[normal] text-center px-1 line-clamp-2">
+            <div className="[font-family:'Nunito',Helvetica] font-semibold text-[#151414] text-xs sm:text-sm tracking-[0] leading-snug text-center px-1 line-clamp-2">
               {item.name}
             </div>
           </>
@@ -60,7 +61,7 @@ export const CategoryCard = ({
   );
 };
 
-export const CategoryCardSkeleton = (): JSX.Element => (
+export const CategoryCardSkeleton = (): React.ReactElement => (
   <Card className="min-w-[90px] max-w-[110px] flex-shrink-0 lg:min-w-0 lg:max-w-[160px] shadow-none sm:shadow-sm">
     <CardContent className="p-1 flex flex-col items-center justify-center h-[90px] gap-1 sm:p-2 sm:h-[100px] md:h-[120px] sm:gap-2">
       <div className="w-full h-10 sm:h-[60px] md:h-[80px] bg-gray-200 rounded-lg animate-pulse"></div>
