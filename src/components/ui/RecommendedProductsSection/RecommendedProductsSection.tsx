@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "../card";
+import { ProductImage } from "../ProductImage";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 
@@ -130,13 +131,12 @@ export const RecommendedProductsSection = ({
               onClick={() => navigate(`/product/${product.id}`)}
             >
               <CardContent className="p-0">
-                <div className="relative w-full aspect-[4/3]">
-                  <img
-                    className="w-full h-full object-cover"
-                    alt="Product"
-                    src={product.img}
-                  />
-                </div>
+                <ProductImage
+                  src={product.img}
+                  alt="Product"
+                  containerClassName="relative w-full aspect-[4/3]"
+                  className="w-full h-full object-cover"
+                />
                 <div className="p-3">
                   <p className="[font-family:'Nunito',Helvetica] font-medium text-[#313131] text-xs tracking-[0] leading-4 mb-2 line-clamp-2">
                     {product.name}

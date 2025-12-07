@@ -96,6 +96,9 @@ export const SearchResultsPage = (): React.ReactElement => {
   const [nbPages, setNbPages] = useState(0);
   const [hasMore, setHasMore] = useState(false);
   const searchQuery = (searchParams.get("q") ?? "").trim();
+  const isCategoryIdQuery = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(searchQuery);
+  const displaySearchText = isCategoryIdQuery ? "" : searchQuery;
+  const emptyStateQueryText = isCategoryIdQuery ? "this category" : `“${searchQuery}”`;
   const initializedFromParams = useRef(false);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const searchKeyRef = useRef<string>("");
@@ -367,19 +370,6 @@ export const SearchResultsPage = (): React.ReactElement => {
   ];
   const deliveryOptions = ["Free Delivery", "Paid Delivery", "No Delivery"];
 
-  // Single-select toggle: select the value, or deselect if already selected
-  const toggleSingle = (
-    value: string,
-    selected: string[],
-    setter: (value: string[]) => void
-  ) => {
-    if (selected.length === 1 && selected[0] === value) {
-      setter([]);
-    } else {
-      setter([value]);
-    }
-  };
-
   const filterContent = (
     <>
       <Card className="bg-white rounded-[15px] border border-[#e0e0e0] shadow-sm hover:shadow-md transition-shadow cursor-pointer">
@@ -627,7 +617,10 @@ export const SearchResultsPage = (): React.ReactElement => {
           onDownloadClick={() => setShowDownloadPopup(true)}
           onWaitlistClick={() => setShowWaitlistPopup(true)}
         />
-        <TopAppBarSection onShowDownloadPopup={() => setShowDownloadPopup(true)} />
+        <TopAppBarSection
+          onShowDownloadPopup={() => setShowDownloadPopup(true)}
+          initialSearchText={displaySearchText}
+        />
       </div>
 
       <AppDownloadPopup
@@ -745,7 +738,7 @@ export const SearchResultsPage = (): React.ReactElement => {
               )}
               {!isLoading && !error && searchQuery !== "" && queryResults.length === 0 && (
                 <div className="col-span-full text-center text-[#313131] [font-family:'Nunito',Helvetica]">
-                  No products found for “{searchQuery}”.
+                  No products found for {emptyStateQueryText}.
                 </div>
               )}
 
