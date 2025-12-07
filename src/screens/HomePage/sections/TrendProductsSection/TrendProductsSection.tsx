@@ -1,6 +1,7 @@
 import { ChevronRightIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "../../../../components/ui/card";
+import { ProductImage } from "../../../../components/ui/ProductImage";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
@@ -61,10 +62,11 @@ export const TrendProductsSection = (): React.ReactElement => {
                   onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <CardContent className="p-0">
-                    <img
+                    <ProductImage
                       src={product.img}
                       alt="Product"
-                      className="w-full h-32 sm:h-[157px] object-cover rounded-t-lg"
+                      containerClassName="w-full h-32 sm:h-[157px] rounded-t-lg"
+                      className="w-full h-full object-cover"
                     />
                     <div className="p-2">
                       <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[16px] sm:text-[18px] tracking-[0] leading-4">
@@ -95,10 +97,11 @@ export const TrendProductsSection = (): React.ReactElement => {
                     onClick={() => navigate(`/product/${product.id}`)}
                   >
                     <CardContent className="p-0">
-                      <img
+                      <ProductImage
                         src={product.img}
                         alt="Product"
-                        className="w-full h-32 sm:h-[157px] object-cover rounded-t-lg"
+                        containerClassName="w-full h-32 sm:h-[157px] rounded-t-lg"
+                        className="w-full h-full object-cover"
                       />
                       <div className="p-2">
                         <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[16px] sm:text-[18px] tracking-[0] leading-4">
@@ -128,10 +131,11 @@ export const TrendProductsSection = (): React.ReactElement => {
                     onClick={() => navigate(`/product/${product.id}`)}
                   >
                     <CardContent className="p-0">
-                      <img
+                      <ProductImage
                         src={product.img}
                         alt="Product"
-                        className="w-full h-32 sm:h-[157px] object-cover rounded-t-lg"
+                        containerClassName="w-full h-32 sm:h-[157px] rounded-t-lg"
+                        className="w-full h-full object-cover"
                       />
                       <div className="p-2">
                         <span className="[font-family:'Nunito',Helvetica] font-extrabold text-[#fc3850] text-[16px] sm:text-[18px] tracking-[0] leading-4">

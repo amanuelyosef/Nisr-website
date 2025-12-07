@@ -1,6 +1,6 @@
 import { SearchIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../button";
 import { Input } from "../input";
 import iconNotification from "../../../assets/images/iconamoon-notification.svg";
@@ -11,11 +11,16 @@ import iconProfile from "../../../assets/images/iconamoon-profile-bold.svg";
 
 interface TopAppBarSectionProps {
 	onShowDownloadPopup?: () => void;
+	initialSearchText?: string;
 }
 
-export const TopAppBarSection = ({ onShowDownloadPopup }: TopAppBarSectionProps): JSX.Element => {
+export const TopAppBarSection = ({ onShowDownloadPopup, initialSearchText }: TopAppBarSectionProps): React.ReactElement => {
 	const navigate = useNavigate();
-	const [searchText, setSearchText] = useState("");
+	const [searchText, setSearchText] = useState(initialSearchText ?? "");
+
+	useEffect(() => {
+		setSearchText(initialSearchText ?? "");
+	}, [initialSearchText]);
 
 	const handleSearch = () => {
 		const query = searchText.trim();

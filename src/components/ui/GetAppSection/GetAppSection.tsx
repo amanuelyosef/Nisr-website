@@ -1,9 +1,11 @@
+import React from "react";
+
 interface GetAppSectionProps {
   onDownloadClick?: () => void;
   onWaitlistClick?: () => void;
 }
 
-export const GetAppSection = ({ onDownloadClick, onWaitlistClick }: GetAppSectionProps): JSX.Element => {
+export const GetAppSection = ({ onDownloadClick, onWaitlistClick }: GetAppSectionProps): React.ReactElement => {
   return (
     <section className="w-full bg-[#ffd9eb] py-2 shadow-sm">
       <div className="container mx-auto px-4 flex flex-row items-center justify-between gap-4 md:gap-8">

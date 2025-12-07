@@ -7,7 +7,7 @@ import { GetAppSection } from "../../components/ui/GetAppSection";
 import AppDownloadPopup from "../../components/ui/AppDownloadPopup";
 import WaitlistPopup from "../../components/ui/WaitlistPopup";
 
-export const HomePage = (): JSX.Element => {
+export const HomePage = (): React.ReactElement => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
   const [showWaitlistPopup, setShowWaitlistPopup] = useState(false);
   return (

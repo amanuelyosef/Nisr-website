@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { GetAppSection } from "../../components/ui/GetAppSection";
