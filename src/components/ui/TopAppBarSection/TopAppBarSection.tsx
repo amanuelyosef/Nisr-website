@@ -154,10 +154,17 @@ export const TopAppBarSection = ({ onShowDownloadPopup, initialSearchText }: Top
 				<div className="flex items-center justify-between">
 					<button
 						type="button"
-						className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-2xl sm:text-[30px] tracking-[0] leading-[normal] whitespace-nowrap bg-transparent border-none cursor-pointer p-0 m-0"
+						className="bg-transparent border-none p-0 m-0 cursor-pointer"
 						onClick={() => navigate("/")}
 					>
-						Nisr Market
+						<div className="flex flex-col items-start">
+							<span className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-2xl sm:text-[30px] tracking-[0] leading-[normal] whitespace-nowrap">
+								Nisr Market
+							</span>
+							<span className="mt-0.5 text-[11px] sm:text-[12px] [font-family:'Nunito',Helvetica] font-extrabold text-[#ff6fa1] tracking-wider italic">
+								Made in AASTU
+							</span>
+						</div>
 					</button>
 					<button
 						className="p-2 rounded-full border border-transparent hover:bg-gray-100"
@@ -202,10 +209,17 @@ export const TopAppBarSection = ({ onShowDownloadPopup, initialSearchText }: Top
 			<div className="hidden lg:flex items-center justify-between gap-8 px-4">
 				<button
 					type="button"
-					className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-[30px] tracking-[0] leading-[normal] whitespace-nowrap bg-transparent border-none cursor-pointer p-0 m-0"
+					className="bg-transparent border-none p-0 m-0 cursor-pointer"
 					onClick={() => navigate("/")}
 				>
-					Nisr Market
+					<div className="flex flex-col items-start">
+						<span className="[font-family:'Montserrat',Helvetica] font-bold text-[#fe2188] text-[30px] tracking-[0] leading-[normal] whitespace-nowrap">
+							Nisr Market
+						</span>
+						<span className="mt-0.5 text-sm [font-family:'Nunito',Helvetica] font-bold text-[#ff6fa1] tracking-wide italic">
+								Made in AASTU
+						</span>
+					</div>
 				</button>
 				<div className="flex-1 max-w-[532px]">
 					{renderSearchBar()}
