@@ -46,13 +46,23 @@ export const RecommendedProductsSection = ({
     }
   }, []);
 
+  // Fisher-Yates shuffle (returns new array)
+  const shuffleArray = <T,>(arr: T[]): T[] => {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  };
+
   // Load the initial document (page_1)
   useEffect(() => {
     const loadInitial = async () => {
       setIsFetching(true);
       const initial = await fetchDocument("page_1");
       if (initial) {
-        setProductList(initial.list ?? []);
+        setProductList(shuffleArray(initial.list ?? []));
         setNextDocumentId(initial.nextDocumentId ?? null);
         setHasMore(Boolean(initial.nextDocumentId));
       } else {
@@ -74,6 +84,8 @@ export const RecommendedProductsSection = ({
     let currentId: string | null = nextDocumentId;
     let fetchedAny = false;
 
+    // Collect up to 3 pages, then shuffle combined products before appending
+    const combined: ProductData[] = [];
     for (let i = 0; i < 3 && currentId; i += 1) {
       const data = await fetchDocument(currentId);
       if (!data) {
@@ -81,11 +93,16 @@ export const RecommendedProductsSection = ({
         break;
       }
 
-      setProductList((prev) => [...prev, ...(data.list ?? [])]);
+      combined.push(...(data.list ?? []));
       fetchedAny = true;
       currentId = data.nextDocumentId ?? null;
 
       if (!currentId) break;
+    }
+
+    const shuffled = shuffleArray(combined);
+    if (shuffled.length) {
+      setProductList((prev) => [...prev, ...shuffled]);
     }
 
     setNextDocumentId(currentId);

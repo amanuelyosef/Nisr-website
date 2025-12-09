@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../../../utils";
 import { Button } from "../../button";
 import { Card, CardContent } from "../../card";
+import deliveryIcon from "../../../../assets/images/delivery_icon.svg";
 
 export const Details = ({ productDetail, setShowDownloadPopup }: any) => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export const Details = ({ productDetail, setShowDownloadPopup }: any) => {
           <div className="text-right text-sm text-[#5A5A5A] pr-2">
             {formatDate(productDetail.postedDate)}
           </div>
-          <h1 className="font-extrabold text-[#fc3850] text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-none">
+          <h1 className="font-sans font-bold tabular-nums text-[#fc3850] text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
             ETB {productDetail.price.toLocaleString()}
           </h1>
           <div className="text-sm text-[#5A5A5A] mb-6">
@@ -23,59 +24,48 @@ export const Details = ({ productDetail, setShowDownloadPopup }: any) => {
           </p>
 
           <div className="flex flex-wrap items-center gap-4 mb-2">
-            <div className="flex items-center gap-1">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M8 15C10 12 12 9.5 12 7C12 4.79086 10.2091 3 8 3C5.79086 3 4 4.79086 4 7C4 9.5 6 12 8 15Z"
-                  stroke="#313131"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle
-                  cx="8"
-                  cy="7"
-                  r="2"
-                  stroke="#313131"
-                  strokeWidth="1"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <span className="text-sm font-medium text-[#313131]">
-                {productDetail.location}
-              </span>
-            </div>
-
-            {productDetail.freeDelivery && (
-              <div className="flex items-center gap-2">
+            {productDetail?.location ? (
+              <div className="flex items-center gap-1">
                 <svg
-                  className="w-6 h-6"
-                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 16 16"
                   fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M22 17L16 20.5L10 17" />
-                  <path d="M16 20.5V9" />
-                  <path d="M22 6L22 17" />
-                  <path d="M10 17V6" />
-                  <path d="M22 6L16 2.5L10 6L16 9.5L22 6Z" />
-                  <path d="M13 4.5L19 8" />
-                  <path d="M2 10H8" />
-                  <path d="M2 14H8" />
+                  <path
+                    d="M8 15C10 12 12 9.5 12 7C12 4.79086 10.2091 3 8 3C5.79086 3 4 4.79086 4 7C4 9.5 6 12 8 15Z"
+                    stroke="#313131"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <circle
+                    cx="8"
+                    cy="7"
+                    r="2"
+                    stroke="#313131"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
                 <span className="text-sm font-medium text-[#313131]">
-                  Free Delivery
+                  {productDetail.location}
                 </span>
               </div>
-            )}
+            ) : null}
+
+            <div className="flex items-center gap-2">
+              <img src={deliveryIcon} alt="Delivery" className="w-6 h-6" />
+              <span className="text-sm font-medium text-[#313131]">
+                {productDetail.freeDelivery === true
+                  ? "Free Delivery"
+                  : productDetail.freeDelivery === false
+                    ? "Paid Delivery"
+                    : "No Delivery"}
+              </span>
+            </div>
           </div>
 
           <div className="text-sm text-[#313131] mb-8">
