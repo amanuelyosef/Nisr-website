@@ -1,40 +1,141 @@
-# Nisr Website 
+# Nisr Website
 
-## Getting started
+Nisr Website is a React + TypeScript marketplace frontend built with Vite and Tailwind CSS. The codebase follows a layered structure inspired by clean architecture to keep domain logic, use cases, and UI concerns separated.
 
-you can check our webiste on the production link. but if you want to chck on you system, follow this steps:
+## Production URL
 
-> **Prerequisites:**
-> The following steps require [NodeJS](https://nodejs.org/en/) to be installed on your system, so please
-> install it beforehand if you haven't already.
+https://amanuelyosef.github.io/Nisr-website/
 
-To get started with your project, you'll first need to install the dependencies with:
+## Tech Stack
 
+- React 19
+- TypeScript
+- Vite 6
+- Tailwind CSS 4
+- React Router
+- Firebase (data source)
+- Algolia (search)
+
+## Architecture Overview
+
+The app is organized into layers:
+
+- domain: Entities and repository contracts.
+- application: Use cases that orchestrate business operations.
+- infrastructure: External integrations (Firebase, Algolia, repository implementations).
+- presentation: Pages, sections, components, and hooks for UI.
+- shared: Cross-cutting constants and utilities.
+
+This helps keep UI components thin and pushes data access/logic behind repository interfaces.
+
+## Project Structure
+
+Key folders in src:
+
+```text
+src/
+	app/
+		routes.tsx
+	application/
+		useCases/
+			getCategories.ts
+			getProductDetail.ts
+			getRecommendedProducts.ts
+			getSellerProducts.ts
+			getSellerProfile.ts
+			getTrendProducts.ts
+			searchProducts.ts
+	domain/
+		entities/
+		repositories/
+	infrastructure/
+		algolia/
+		firebase/
+		repositories/
+	presentation/
+		components/
+		features/
+			home/
+				sections/
+					CategoriesSection/
+					TrendProductsSection/
+		hooks/
+		pages/
+			HomePage/
+			ProductDetailPage/
+			SearchResultsPage/
+			SellerShopPage/
+	shared/
+		constants/
+		utils/
+	styles/
 ```
+
+## Available Routes
+
+Defined in src/app/routes.tsx:
+
+- / -> Home page
+- /search -> Search results
+- /product/:productId -> Product detail
+- /seller/:sellerId -> Seller shop
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+ recommended
+- npm
+
+### Installation
+
+```bash
 npm install
 ```
 
-Then, you'll be able to run a development version of the project with:
+### Environment Variables
 
+Create a local env file from the example:
+
+```bash
+copy .env.example .env
 ```
+
+Required variables (see .env.example):
+
+- Firebase: VITE_FIREBASE_API_KEY, VITE_FIREBASE_AUTH_DOMAIN, VITE_FIREBASE_PROJECT_ID, VITE_FIREBASE_STORAGE_BUCKET, VITE_FIREBASE_MESSAGING_SENDER_ID, VITE_FIREBASE_APP_ID, VITE_FIREBASE_MEASUREMENT_ID
+- Algolia: VITE_ALGOLIA_APP_ID, VITE_ALGOLIA_API_KEY, VITE_ALGOLIA_INDEX
+
+### Run in Development
+
+```bash
 npm run dev
 ```
 
-After a few seconds, your project should be accessible at the address
-[http://localhost:5173/](http://localhost:5173/)
+App runs at http://localhost:5173/
 
-To preview a production build locally:
+### Build and Preview
 
-```
-npm run preview
-```
-
-If you are satisfied with the result, you can finally build the project for release with:
-
-```
+```bash
 npm run build
+npm run preview
 ```
 
 ## Deployment
 
-The repository ships with a GitHub Actions workflow (`.github/workflows/deploy-pages.yml`) that builds the Vite app and deploys it to GitHub Pages (branch `main`, Pages source "GitHub Actions"). Every push to `main` automatically rebuilds and publishes the site at [https://amanuelyosef.github.io/Nisr-website/](https://amanuelyosef.github.io/Nisr-website/).
+### GitHub Pages (automatic)
+
+This repository includes .github/workflows/deploy-pages.yml.
+
+- Trigger: push to main
+- Build output: dist
+- Deployment target: GitHub Pages
+
+### Firebase Hosting (optional/manual)
+
+firebase.json is configured to serve dist with SPA rewrites. After building, deploy with Firebase CLI if needed.
+
+## Notes
+
+- Vite alias @ points to src (configured in vite.config.ts).
+- Build output directory is dist.
