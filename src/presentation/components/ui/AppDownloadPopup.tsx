@@ -16,13 +16,26 @@ const AppDownloadPopup: React.FC<AppDownloadPopupProps> = ({ isOpen, onClose, on
 
   if (!isOpen) return null;
 
-  const handleDownload = () => {
+  const handleDownload = async() => {
     if (isDownloading) return;
     setIsDownloading(true);
-    // Small delay so the UI can show the downloading state, then navigate in the same tab
-    setTimeout(() => {
-      window.location.href = downloadUrl;
-    }, 150);
+
+    try {
+      const resp = await fetch('https://europe-west3-nisr-test.cloudfunctions.net/getLatestApkDownloadUrl');
+      if (!resp.ok) throw new Error(`Network response was not ok (${resp.status})`);
+      const data = await resp.json();
+      const url = data?.downloadUrl;
+      if (!url) throw new Error('No downloadUrl returned from server');
+      // Navigate to the download URL to start the APK download
+      window.location.href = url;
+    } catch (err) {
+      // Re-enable the button and inform the user
+      // eslint-disable-next-line no-console
+      console.error('Failed to get download URL', err);
+      // Minimal user feedback
+      alert('Unable to start download. Please try again later.');
+      setIsDownloading(false);
+    }
   };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
