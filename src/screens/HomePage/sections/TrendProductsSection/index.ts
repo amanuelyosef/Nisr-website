@@ -1,1 +1,0 @@
-export { TrendProductsSection } from "./TrendProductsSection";

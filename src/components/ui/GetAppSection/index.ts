@@ -1,1 +1,0 @@
-export { GetAppSection } from "./GetAppSection";
