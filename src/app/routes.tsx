@@ -4,7 +4,7 @@ import { HomePage } from "../presentation/pages/HomePage/HomePage";
 import { SearchResultsPage } from "../presentation/pages/SearchResultsPage/SearchResultsPage";
 import { ProductDetailPage } from "../presentation/pages/ProductDetailPage/ProductDetailPage";
 import { SellerShopPage } from "../presentation/pages/SellerShopPage/SellerShopPage";
-import { PrivacyPolicyPage } from "../presentation/pages/PrivacyPolicyPage";
+import { PrivacyPolicyPage } from "../presentation/pages/PrivacyPolicyPage/PrivacyPolicyPage";
 import { DeleteAccountPage } from "../presentation/pages/DeleteAccountPage";
 
 // ScrollToTop component ensures the window scrolls to top on route change
