@@ -4,6 +4,7 @@ import { HomePage } from "../presentation/pages/HomePage/HomePage";
 import { SearchResultsPage } from "../presentation/pages/SearchResultsPage/SearchResultsPage";
 import { ProductDetailPage } from "../presentation/pages/ProductDetailPage/ProductDetailPage";
 import { SellerShopPage } from "../presentation/pages/SellerShopPage/SellerShopPage";
+import { PrivacyPolicyPage } from "../presentation/pages/PrivacyPolicyPage";
 
 // ScrollToTop component ensures the window scrolls to top on route change
 export const ScrollToTop = () => {
@@ -25,6 +26,7 @@ export const AppRoutes = () => {
         <Route path="/search" element={<SearchResultsPage />} />
         <Route path="/product/:productId" element={<ProductDetailPage />} />
         <Route path="/seller/:sellerId" element={<SellerShopPage />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
       </Routes>
     </BrowserRouter>
   );
